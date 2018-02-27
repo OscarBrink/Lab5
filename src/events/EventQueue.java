@@ -13,27 +13,40 @@ public class EventQueue {
 	 * @param   event   Event to be added.
 	 */
 	public void addEvent(Event event) {
-		queueList.add(findPosition(event), event);
+		queueList.add(findInsertionPosition(event), event);
 	}
 
-	private int findPosition(Event event) {
-        if (size() == 0) {
-            return 0;
-        }
+	/*
+	 * Uses binary search to find position to insert new event.
+	 */
+	private int findInsertionPosition(Event event) {
+		if (size() == 0) {
+			return 0;
+		}
 
-	    int eventTime = event.getTime();
-	    int searchVal = queueList.size() / 2;
+		int eventTime = event.getTime();
+		if (eventTime <= queueList.get(0).getTime()) {
+			return 0;
+		} else if (eventTime >= queueList.get(queueList.size()-1).getTime()) {
+			return queueList.size();
+		}
 
-	    while (true) {
+		int searchVal = 1;
+		int lowestChecked = 0, highestChecked = queueList.size() - 1;
+
+		while ((queueList.get(searchVal - 1).getTime() > eventTime
+				|| queueList.get(searchVal).getTime() <= eventTime)) {
+			searchVal = (lowestChecked + highestChecked ) / 2;
+
 			if (queueList.get(searchVal).getTime() < eventTime) {
-
-			} else if (queueList.get(searchVal).getTime() > eventTime) {
-
-			} else {
-
+				lowestChecked = searchVal + 1;
+			} else if (queueList.get(searchVal).getTime() < eventTime) {
+				highestChecked = searchVal - 1;
 			}
-        }
-    }
+		}
+
+		return searchVal;
+	}
 
 	/**
 	 * Removes the first object from the queue.
