@@ -13,8 +13,27 @@ public class EventQueue {
 	 * @param   event   Event to be added.
 	 */
 	public void addEvent(Event event) {
-		queueList.add(event);
+		queueList.add(findPosition(event), event);
 	}
+
+	private int findPosition(Event event) {
+        if (size() == 0) {
+            return 0;
+        }
+
+	    int eventTime = event.getTime();
+	    int searchVal = queueList.size() / 2;
+
+	    while (true) {
+			if (queueList.get(searchVal).getTime() < eventTime) {
+
+			} else if (queueList.get(searchVal).getTime() > eventTime) {
+
+			} else {
+
+			}
+        }
+    }
 
 	/**
 	 * Removes the first object from the queue.
