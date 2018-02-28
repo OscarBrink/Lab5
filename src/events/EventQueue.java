@@ -35,12 +35,12 @@ public class EventQueue {
 		int lowestChecked = 0, highestChecked = queueList.size() - 1;
 
 		while ((queueList.get(searchVal - 1).getTime() > eventTime
-				|| queueList.get(searchVal).getTime() <= eventTime)) {
+				|| queueList.get(searchVal).getTime() < eventTime)) {
 			searchVal = (lowestChecked + highestChecked ) / 2;
 
 			if (queueList.get(searchVal).getTime() < eventTime) {
 				lowestChecked = searchVal + 1;
-			} else if (queueList.get(searchVal).getTime() < eventTime) {
+			} else if (queueList.get(searchVal).getTime() > eventTime) {
 				highestChecked = searchVal - 1;
 			}
 		}
