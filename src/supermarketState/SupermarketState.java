@@ -1,6 +1,7 @@
 package supermarketState;
 
 import events.EventQueue;
+import simulation.*;
 
 public class SupermarketState extends State {
 
