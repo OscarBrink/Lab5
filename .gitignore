@@ -15,7 +15,7 @@ out/
 # Maven
 log/
 target/
-<<<<<<< HEAD
 /bin/
-=======
->>>>>>> c81e9e56ad2e4977da66971689851f8315258ec9
+
+# Oscar localTest
+localTest/
