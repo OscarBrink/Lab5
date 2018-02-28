@@ -25,9 +25,9 @@ public class SupermarketState extends State {
 	public String[] supermarketInfo(){
 		int size = queueListSize();
 		String[] info = new String[13];
-		info[0] = queueList.get(size-1).getTime();
+		info[0] = String.valueOf(queueList.get(size-1).getTime());
 		info[1] = queueList.get(size-1).getEventName();
-		info[2] = queueList.get(size-1).getCustomerNumber();
+		info[2] = String.valueOf(queueList.get(size-1).getCustomerNumber());
 		info[3] = isOpen();
 		info[4] = String.valueOf(nrOfFreeCashiers);
 		info[5] = String.valueOf(idleCashierTime);
