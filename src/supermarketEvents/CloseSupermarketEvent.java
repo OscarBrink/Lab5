@@ -19,9 +19,12 @@ public class CloseSupermarketEvent extends Event {
 		return "CloseSupermarketEvent";
 	}
 
+	/**
+	 * Closes store.
+	 */
 	@Override
 	public void effect() {
-		// ändra Supermarketstate == closed m.m.
+		state.closeStore();
 
 	}
 
