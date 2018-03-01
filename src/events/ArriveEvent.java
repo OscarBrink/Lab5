@@ -1,10 +1,14 @@
 package events;
 
-public class ArriveEvent extends Event {
+import supermarketState.SupermarketState;
 
-	public ArriveEvent(int time) {
+public class ArriveEvent extends Event {
+	private SupermarketState state;
+
+	public ArriveEvent(int time, SupermarketState state) {
 		// Customer c = createCustomer(); Skapa kund i kundfabriken.
 		super.time = time;
+		this.state = state;
 
 	}
 
