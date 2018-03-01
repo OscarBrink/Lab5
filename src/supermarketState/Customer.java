@@ -28,6 +28,13 @@ public class Customer {
 		return queueTime;
 	}
 
+	/**
+	 * Sets the Quetime.
+	 * 
+	 * @param time
+	 *            The current time.
+	 * @pre startQueue must have been set.
+	 */
 	public void setQueueTime(double time) {
 		this.queueTime = time - this.startQueue;
 	}

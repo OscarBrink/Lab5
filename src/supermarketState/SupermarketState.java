@@ -103,22 +103,40 @@ public class SupermarketState extends State {
 		this.isOpen = false;
 	}
 
+	/**
+	 * @return nrOfFreeCashiers The nr of cashiers currently free.
+	 */
 	public int getFreeCashiers() {
 		return this.nrOfFreeCashiers;
 	}
 
+	/**
+	 * @return currentTime The current time.
+	 */
 	public double getCurrTime() {
 		return this.currentTime;
 	}
 
+	/**
+	 * Increases the total quetime for the store.
+	 * 
+	 * @param time
+	 *            The time a specific customer has been in que.
+	 */
 	public void increaseQueTime(double time) {
 		this.queueTime += time;
 	}
 
+	/**
+	 * Increases amount of free cashiers.
+	 */
 	public void increaseFreeCashiers() {
 		this.nrOfFreeCashiers++;
 	}
 
+	/**
+	 * Decreases nr of free cashiers.
+	 */
 	public void decreaseFreeCashiers() {
 		this.nrOfFreeCashiers--;
 	}

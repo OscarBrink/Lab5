@@ -18,6 +18,11 @@ public class PickEvent extends Event {
 		que.addEvent(this);// Adds itself to the EventQueue
 	}
 
+	/**
+	 * Customer is done choosing their stuff. If there are free cashiers the
+	 * customer goes to pay. If there are no free cashiers the customer is placed in
+	 * a que. Customers queTime is started.
+	 */
 	@Override
 	public void effect() {
 		if (state.getFreeCashiers() > 0) {
@@ -40,6 +45,9 @@ public class PickEvent extends Event {
 
 	}
 
+	/**
+	 * returns the amount of customers in cashierQue.
+	 */
 	public static int getQueSize() {
 		return cashQue.size();
 	}
