@@ -4,25 +4,27 @@ package supermarketState;
  * Class describes a customer visiting the supermarket in the simulation.
  */
 public class Customer {
-
-	private static int amount = 0; /* Amount of customer objects created
-									  i.e. created during the simulation. */
-	private int customerNumber,
+	private int number,
 		queueTime,
 		startQueue;
 
+	/*
 	/**
 	 * Constructor.
-	 */
+	 * /
 	public Customer() {
-		customerNumber = ++amount;
+		number = ++amount;
+	}
+	*/
+	public Customer(int number) {
+		this.number = number;
 	}
 
 	/**
 	 * @return int Gets the customer ID-number.
 	 */
 	public int getCustomerNumber() {
-		return customerNumber;
+		return number;
 	}
 
 	/**
