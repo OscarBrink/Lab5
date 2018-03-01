@@ -1,8 +1,8 @@
-package supermarketView;
+package supermarketSimulator.supermarketView;
 
 import java.util.Observable;
-import supermarketState.SupermarketState;
-import view.View;
+import supermarketSimulator.supermarketState.SupermarketState;
+import genericSimulator.view.View;
 
 public class SupermarketView extends View {
 	

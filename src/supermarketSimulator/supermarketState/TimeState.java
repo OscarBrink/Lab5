@@ -1,4 +1,4 @@
-package supermarketState;
+package supermarketSimulator.supermarketState;
 
 public class TimeState {
 	static long tempSeed = 1;

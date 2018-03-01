@@ -1,4 +1,4 @@
-package events;
+package genericSimulator.events;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;

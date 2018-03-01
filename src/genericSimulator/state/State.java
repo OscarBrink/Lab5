@@ -1,4 +1,4 @@
-package state;
+package genericSimulator.state;
 
 import java.util.Observable;
 
