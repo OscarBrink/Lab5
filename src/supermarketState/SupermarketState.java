@@ -49,10 +49,7 @@ public class SupermarketState extends State {
 	}
 
 	private String isOpen() {
-		if (currentCustomers <= maxCustomers) {
-			return "Ö";
-		}
-		return "S";
+		return (currentCustomers <= maxCustomers) ? "Ö":"S"; 
 	}
 
 	/**
