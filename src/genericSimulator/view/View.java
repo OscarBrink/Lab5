@@ -1,4 +1,4 @@
-package view;
+package genericSimulator.view;
 
 import java.util.Observable;
 import java.util.Observer;

@@ -1,4 +1,4 @@
-package supermarketState;
+package supermarketSimulator.supermarketState;
 
 /**
  * Class describes a customer visiting the supermarket in the simulation.

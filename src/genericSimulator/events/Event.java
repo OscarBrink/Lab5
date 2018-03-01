@@ -1,4 +1,4 @@
-package events;
+package genericSimulator.events;
 
 public abstract class Event {
 	protected double time;
