@@ -3,6 +3,11 @@ package supermarketState;
 import events.EventQueue;
 import state.State;
 import supermarketEvents.PickEvent;
+import supermarketEvents.ArriveEvent;
+import supermarketEvents.CloseSupermarketEvent;
+import supermarketEvents.PayEvent;
+import supermarketEvents.StartEvent;
+import supermarketEvents.StopSimEvent;
 
 public class SupermarketState extends State {
 
@@ -30,18 +35,51 @@ public class SupermarketState extends State {
 		String[] info = new String[13];
 		info[0] = String.valueOf(queueList.get(size-1).getTime());
 		info[1] = queueList.get(size-1).getEventName();
-		info[2] = String.valueOf(queueList.get(size-1).getCustomerNumber());
+		info[2] = String.valueOf(((PickEvent) (queueList.get(size-1))).getCustomerNumber());
 		info[3] = isOpen();
 		info[4] = String.valueOf(nrOfFreeCashiers);
 		info[5] = String.valueOf(idleCashierTime);
 		info[6] = String.valueOf(currentCustomers);
 		info[7] = String.valueOf(finishedCustomers);
 		info[8] = String.valueOf(customersMissed);
-		info[9] = String.valueOf(queueList.get(size-1).getTotQueSize());
+		info[9] = String.valueOf(((PickEvent) (queueList.get(size-1))).getTotQueSize());
 		info[10] = String.valueOf(queueTime);
-		info[11] = String.valueOf(queueList.get(size-1).getQueSize());
-		info[12] = queueList.get(size-1).queToString();
+		info[11] = String.valueOf(((PickEvent) (queueList.get(size-1))).getQueSize());
+		info[12] = ((PickEvent) (queueList.get(size-1))).queToString();
 		return info;
+	}
+	
+	/**
+	 * Puts the start parameters for the simulator into an array.
+	 */
+	public double[] supermarketParameters(){
+		double[] parameters = new double[8];
+		parameters[0] = openCashiers;
+		parameters[1] = maxCustomers;
+		parameters[2] = //Ankomsthatighet 
+		parameters[3] = //plocktid minsta
+		parameters[4] = //plocktid största
+		parameters[5] = //betaltid minsta
+		parameters[6] = //betaltid största
+		parameters[7] = //fröet
+		return parameters;
+	}
+	
+	/**
+	 * Puts the result of the simulation into an array.
+	 */
+	public double[] supermarketResult(){
+		int size = queueListSize();
+		double[] result = new double[8];
+		result[0] = //Totala antalet kunder som kommit till affären, oavsett öppet eller stängt.
+		result[1] = finishedCustomers;
+		result[2] = customersMissed;
+		result[3] = openCashiers;
+		result[4] = idleCashierTime;
+		result[5] = queueList.get(size-1).getTime();
+		result[6] = maxCustomers;
+		result[7] = //Total tid maxantalet på kunder har köat.
+		return result;
 	}
 
 	public int queueListSize() {

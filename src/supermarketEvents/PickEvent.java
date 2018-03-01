@@ -50,19 +50,23 @@ public class PickEvent extends Event {
 	/**
 	 * returns the amount of customers in cashierQue.
 	 */
-	public static int getQueSize() {
+	public int getQueSize() {
 		return cashQue.size();
 	}
 	
+	public int getCustomerNumber(){
+		return c.getCustomerNumber();
+	}
+	
 	/**
-	 * returns the totale amount of customers that has been in cashierQue.
+	 * returns the total amount of customers that has been in cashierQue.
 	 */
-	public static int getTotQueSize() {
+	public int getTotQueSize() {
 		return queTot;
 	}
 	
 	/**
-	 * @return queString a stringrepresentation of the cashQue.
+	 * @return queString a string representation of the cashQue.
 	 */
 	public String queToString(){
 		String queString = "[";
