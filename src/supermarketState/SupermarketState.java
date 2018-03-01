@@ -7,8 +7,9 @@ import state.State;
 public class SupermarketState extends State {
 
 	private int finishedCustomers, currentCustomers, customersMissed, maxCustomers;
-	private int queueTime, idleCashierTime;
+	private double queueTime, idleCashierTime;
 	private int nrOfFreeCashiers, openCashiers;
+	private double currentTime;
 	private EventQueue queueList;
 	private boolean isOpen;
 
@@ -104,5 +105,21 @@ public class SupermarketState extends State {
 
 	public int getFreeCashiers() {
 		return this.nrOfFreeCashiers;
+	}
+
+	public double getCurrTime() {
+		return this.currentTime;
+	}
+
+	public void increaseQueTime(double time) {
+		this.queueTime += time;
+	}
+
+	public void increaseFreeCashiers() {
+		this.nrOfFreeCashiers++;
+	}
+
+	public void decreaseFreeCashiers() {
+		this.nrOfFreeCashiers--;
 	}
 }
