@@ -7,8 +7,8 @@ public class Customer {
 	private int number;
 	private double queueTime, startQueue;
 
-	/*
-	 * /** Constructor. / public Customer() { number = ++amount; }
+	/**
+	 * Constructor.
 	 */
 	public Customer(int number) {
 		this.number = number;

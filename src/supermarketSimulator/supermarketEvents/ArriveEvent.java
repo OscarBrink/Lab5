@@ -1,6 +1,8 @@
 package supermarketEvents;
 
 import events.*;
+import genericSimulator.events.Event;
+import genericSimulator.events.EventQueue;
 import supermarketState.*;
 
 public class ArriveEvent extends Event {

@@ -2,6 +2,8 @@ package supermarketEvents;
 
 import java.util.ArrayList;
 import events.*;
+import genericSimulator.events.Event;
+import genericSimulator.events.EventQueue;
 import supermarketState.*;
 
 public class PickEvent extends Event {

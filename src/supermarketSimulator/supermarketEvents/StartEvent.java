@@ -1,24 +1,25 @@
 package supermarketEvents;
 
-import events.Event;
+import genericSimulator.events.Event;
 import supermarketState.SupermarketState;
 
-public class StopSimEvent extends Event {
+public class StartEvent extends Event {
 	private SupermarketState state;
 
-	public StopSimEvent(int time, SupermarketState state) {
+	public StartEvent(int time, SupermarketState state) {
 		super.time = time;
 		this.state = state;
+
 	}
 
 	@Override
 	public String getEventName() {
-		return "StopSimEvent";
+		return "StartEvent";
 	}
 
 	@Override
 	public void effect() {
-		// Stoppa simulationen.
+		// Öppna butik m.m.
 
 	}
 
