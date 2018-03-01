@@ -1,7 +1,6 @@
 package supermarketState;
 
 import events.EventQueue;
-import simulation.*;
 import state.State;
 
 public class SupermarketState extends State {
@@ -36,10 +35,10 @@ public class SupermarketState extends State {
 		info[6] = String.valueOf(currentCustomers);
 		info[7] = String.valueOf(finishedCustomers);
 		info[8] = String.valueOf(customersMissed);
-		info[9] = //Antal som måste köa
+		info[9] = String.valueOf(queueList.get(size-1).getMaxQueSize());
 		info[10] = String.valueOf(queueTime);
-		info[11] = //Antal kunder i kön
-		info[12] = //Skriva ut kön
+		info[11] = String.valueOf(queueList.get(size-1).getQueSize());
+		info[12] = queueList.get(size-1).toString();
 		return info;
 	}
 
