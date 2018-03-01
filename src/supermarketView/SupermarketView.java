@@ -33,6 +33,7 @@ public class SupermarketView extends View {
 		}
 		if(state.getQueueList().get(size-1).getEventName() == "StopEvent"){
 			System.out.printf("%-10s %-10s\n", info[0], info[1]);
+			printResult();
 		}
 		else{
 			System.out.printf("%-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s\n", info[0], info[1], info[2], info[3], info[4], info[5], info[6], info[7], info[8], info[9], info[10],info[11],info[12]);
@@ -54,7 +55,7 @@ public class SupermarketView extends View {
 		double[] res = state.supermarketResult();
 		System.out.println("RESULTAT\n==========\n");
 		System.out.println("1) Av " + res[0] + " kunder handlade " + res[1] + " medan " + res[2] + " missades.");
-		System.out.println("2) Total tid " + res[3] + " varit lediga " + res[4] + " te.\nGenomsnittlig ledig kassatid: " + res[5]/res[4] + "te.");
-		System.out.println("3) Total tid " + res[6] + " kunder tvingats köa " + res[7] + " te.\nGenomsnittlig kötid: " + res[5]/res[7] + "te.");
+		System.out.println("2) Total tid " + res[3] + " varit lediga: " + res[4] + " te.\nGenomsnittlig ledig kassatid: " + res[5]/res[4] + "te.");
+		System.out.println("3) Total tid " + res[6] + " kunder tvingats köa: " + res[7] + " te.\nGenomsnittlig kötid: " + res[5]/res[7] + "te.");
 	}
 }

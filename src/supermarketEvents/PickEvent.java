@@ -74,6 +74,10 @@ public class PickEvent extends Event {
 			queString+= c.getCustomerNumber() + ", ";
 		return queString + "]";
 	}
+	
+	public double getQueueTime(){
+		return c.getQueueTime();
+	}
 
 	@Override
 	public String getEventName() {
