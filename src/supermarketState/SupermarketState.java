@@ -73,8 +73,19 @@ public class SupermarketState extends State {
 	/**
 	 * Increases current nr of customers in the store.
 	 */
-	public void IncreaseCurrCustomers() {
+	public void increaseCurrCustomers() {
 		this.currentCustomers++;
+	}
+
+	/**
+	 * Decreases current nr of customers in the store.
+	 */
+	public void decreaseCurrCustomers() {
+		this.currentCustomers--;
+	}
+
+	public void finishedCustomer() {
+		this.finishedCustomers++;
 	}
 
 	/**
@@ -89,5 +100,9 @@ public class SupermarketState extends State {
 	 */
 	public void closeStore() {
 		this.isOpen = false;
+	}
+
+	public int getFreeCashiers() {
+		return this.nrOfFreeCashiers;
 	}
 }

@@ -8,7 +8,7 @@ public class ArriveEvent extends Event {
 	private EventQueue que;
 	private Customer c;
 
-	public ArriveEvent(int time, SupermarketState state, EventQueue que) {
+	public ArriveEvent(double time, SupermarketState state, EventQueue que) {
 		c = CustomerFactory.newCustomer(); // Creates customer.
 		super.time = time;
 		this.state = state;
@@ -31,14 +31,15 @@ public class ArriveEvent extends Event {
 	public void effect() {
 		if (state.Open()) {
 			if (state.canEnter()) {
-				state.IncreaseCurrCustomers();
-				new PickEvent(0, state, que, c);// Creates a pickevent for the customer.
-				new ArriveEvent(0, state, que); // Creates the next arrival.
+				state.increaseCurrCustomers();
+				new PickEvent(TimeState.pickTime(), state, que, c);// Creates a pickevent for the customer.
+				new ArriveEvent(TimeState.arrivalTime(), state, que); // Creates the next arrival.
 			} else {
 				state.missedCustomer(); // Missed a customer
 			}
 		} else {
-			new ArriveEvent(0, state, que); // Keeps generating customers even if store is closed??
+			new ArriveEvent(TimeState.arrivalTime(), state, que); // Keeps generating customers even if store is
+																	// closed??
 		}
 
 	}

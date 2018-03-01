@@ -8,7 +8,7 @@ public class PickEvent extends Event {
 	private EventQueue que;
 	private Customer c;
 
-	public PickEvent(int time, SupermarketState state, EventQueue que, Customer c) {
+	public PickEvent(double time, SupermarketState state, EventQueue que, Customer c) {
 		this.c = c;
 		super.time = time;
 		this.state = state;
@@ -18,7 +18,12 @@ public class PickEvent extends Event {
 
 	@Override
 	public void effect() {
-		// skapa nytt payEvent m.m.
+		if (state.getFreeCashiers() > 0) {
+			// If there are free cashiers. Pay.
+			new PayEvent(TimeState.paymentTime(), state, que, c);
+		} else {
+			// add customer to Que?
+		}
 	}
 
 	@Override

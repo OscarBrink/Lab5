@@ -1,9 +1,9 @@
 package events;
 
 public abstract class Event {
-	protected int time;
+	protected double time;
 
-	public int getTime() {
+	public double getTime() {
 		return time;
 	}
 

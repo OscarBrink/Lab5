@@ -1,24 +1,23 @@
 package supermarketState;
 
-
 public class TimeState {
-	long tempSeed = 1;
-	double tempLambda = 1.d;
-	double tempLower = 10.d;
-	double tempUpper = 20.d;
+	static long tempSeed = 1;
+	static double tempLambda = 1.d;
+	static double tempLower = 10.d;
+	static double tempUpper = 20.d;
 
-	ExponentialRandomStream exp = new ExponentialRandomStream(tempLambda, tempSeed);
-	UniformRandomStream uni = new UniformRandomStream(tempLower, tempUpper, tempSeed);
-	
-	public double arrivalTime() {
+	static ExponentialRandomStream exp = new ExponentialRandomStream(tempLambda, tempSeed);
+	static UniformRandomStream uni = new UniformRandomStream(tempLower, tempUpper, tempSeed);
+
+	public static double arrivalTime() {
 		return exp.next();
 	}
-	
-	public double pickTime() {
+
+	public static double pickTime() {
 		return uni.next();
 	}
-	
-	public double paymentTime() {
+
+	public static double paymentTime() {
 		return uni.next();
 	}
 }
