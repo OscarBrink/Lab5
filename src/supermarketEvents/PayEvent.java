@@ -1,5 +1,6 @@
-package events;
+package supermarketEvents;
 
+import events.Event;
 import supermarketState.SupermarketState;
 
 public class PayEvent extends Event {

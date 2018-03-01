@@ -2,6 +2,7 @@ package supermarketState;
 
 import events.EventQueue;
 import simulation.*;
+import state.State;
 
 public class SupermarketState extends State {
 
