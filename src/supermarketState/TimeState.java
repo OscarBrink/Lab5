@@ -15,7 +15,7 @@ public class TimeState {
 	}
 	
 	public double pickTime() {
-		return 0.d;
+		return uni.next();
 	}
 	
 	public double paymentTime() {
