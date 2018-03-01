@@ -5,19 +5,19 @@ import simulation.*;
 
 public class SupermarketState extends State {
 
-	private int finishedCustomers,currentCustomers, customersMissed, maxCustomers;
+	private int finishedCustomers, currentCustomers, customersMissed, maxCustomers;
 	private int queueTime, idleCashierTime;
 	private int nrOfFreeCashiers, openCashiers;
 	private EventQueue queueList;
-	
-	public SupermarketState(EventQueue queueList){
+
+	public SupermarketState(EventQueue queueList) {
 		this.queueList = queueList;
 	}
-	
-	public EventQueue getQueueList(){
+
+	public EventQueue getQueueList() {
 		return queueList;
 	}
-	
+
 	/**
 	 * Puts all the variables for each event into an array.
 	 * @return info Array with all the variables.
@@ -40,16 +40,31 @@ public class SupermarketState extends State {
 		info[12] = //Skriva ut kön
 		return info;
 	}
-	
-	public int queueListSize(){
+
+	public int queueListSize() {
 		return queueList.size();
 	}
-	
-	private String isOpen(){
-		if(currentCustomers <= maxCustomers){
+
+	private String isOpen() {
+		if (currentCustomers <= maxCustomers) {
 			return "Ö";
 		}
 		return "S";
-	}	
-}
+	}
 
+	/**
+	 * returns true/false depending on if the max amount of customers are already in
+	 * the store. Will be called when a new arrival comes.
+	 */
+	public boolean canEnter() {
+		return currentCustomers < maxCustomers;
+	}
+
+	/**
+	 * Increases nr of customers missed. Called from arrive if the customer cannot
+	 * enter.
+	 */
+	public void missedCustomer() {
+		this.customersMissed++;
+	}
+}
