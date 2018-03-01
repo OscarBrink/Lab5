@@ -30,7 +30,7 @@ public class EventQueue {
 			return 0;
 		}
 
-		int eventTime = event.getTime();
+		double eventTime = event.getTime();
 		if (eventTime <= queueList.get(0).getTime()) {
 			return 0;
 		} else if (eventTime >= queueList.get(queueList.size()-1).getTime()) {
