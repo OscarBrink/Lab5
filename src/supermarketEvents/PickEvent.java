@@ -9,6 +9,7 @@ public class PickEvent extends Event {
 	private EventQueue que;
 	private Customer c;
 	private static ArrayList<Customer> cashQue = new ArrayList<Customer>();
+	private static int queTot;
 
 	public PickEvent(double time, SupermarketState state, EventQueue que, Customer c) {
 		this.c = c;
@@ -32,6 +33,7 @@ public class PickEvent extends Event {
 		} else {
 			cashQue.add(c); // Adding customer to que as no cashiers are available.
 			c.setStartQueue(state.getCurrTime());
+			queTot++;
 		}
 	}
 
@@ -50,6 +52,23 @@ public class PickEvent extends Event {
 	 */
 	public static int getQueSize() {
 		return cashQue.size();
+	}
+	
+	/**
+	 * returns the totale amount of customers that has been in cashierQue.
+	 */
+	public static int getTotQueSize() {
+		return queTot;
+	}
+	
+	/**
+	 * @return queString a stringrepresentation of the cashQue.
+	 */
+	public String queToString(){
+		String queString = "[";
+		for(Customer c: cashQue)
+			queString+= c.getCustomerNumber() + ", ";
+		return queString + "]";
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package supermarketState;
 
 import events.EventQueue;
 import state.State;
+import supermarketEvents.PickEvent;
 
 public class SupermarketState extends State {
 
@@ -36,10 +37,10 @@ public class SupermarketState extends State {
 		info[6] = String.valueOf(currentCustomers);
 		info[7] = String.valueOf(finishedCustomers);
 		info[8] = String.valueOf(customersMissed);
-		info[9] = String.valueOf(queueList.get(size-1).getMaxQueSize());
+		info[9] = String.valueOf(queueList.get(size-1).getTotQueSize());
 		info[10] = String.valueOf(queueTime);
 		info[11] = String.valueOf(queueList.get(size-1).getQueSize());
-		info[12] = queueList.get(size-1).toString();
+		info[12] = queueList.get(size-1).queToString();
 		return info;
 	}
 
