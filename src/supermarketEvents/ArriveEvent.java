@@ -1,15 +1,18 @@
 package supermarketEvents;
 
-import events.Event;
-import supermarketState.SupermarketState;
+import events.*;
+import supermarketState.*;
 
 public class ArriveEvent extends Event {
 	private SupermarketState state;
+	private EventQueue que;
 
-	public ArriveEvent(int time, SupermarketState state) {
-		// Customer c = createCustomer(); Skapa kund i kundfabriken.
+	public ArriveEvent(int time, SupermarketState state, EventQueue que) {
+		Customer c = CustomerFactory.newCustomer(); // Creates customer.
 		super.time = time;
 		this.state = state;
+		this.que = que;
+		que.addEvent(this); // Adds itself to eventQue.
 
 	}
 
