@@ -1,14 +1,19 @@
 package supermarketEvents;
 
-import events.Event;
-import supermarketState.SupermarketState;
+import events.*;
+import supermarketState.*;
 
 public class PickEvent extends Event {
 	private SupermarketState state;
+	private EventQueue que;
+	private Customer c;
 
-	public PickEvent(int time, SupermarketState state) {
+	public PickEvent(int time, SupermarketState state, EventQueue que, Customer c) {
+		this.c = c;
 		super.time = time;
 		this.state = state;
+		this.que = que;
+		que.addEvent(this);// Adds itself to the EventQueue
 	}
 
 	@Override

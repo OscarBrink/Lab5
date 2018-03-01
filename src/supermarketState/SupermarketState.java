@@ -10,6 +10,7 @@ public class SupermarketState extends State {
 	private int queueTime, idleCashierTime;
 	private int nrOfFreeCashiers, openCashiers;
 	private EventQueue queueList;
+	private boolean isOpen;
 
 	public SupermarketState(EventQueue queueList) {
 		this.queueList = queueList;
@@ -67,5 +68,26 @@ public class SupermarketState extends State {
 	 */
 	public void missedCustomer() {
 		this.customersMissed++;
+	}
+
+	/**
+	 * Increases current nr of customers in the store.
+	 */
+	public void IncreaseCurrCustomers() {
+		this.currentCustomers++;
+	}
+
+	/**
+	 * Returns true if the store is open.
+	 */
+	public boolean Open() {
+		return isOpen;
+	}
+
+	/**
+	 * sets isOpen to false, closes store.
+	 */
+	public void closeStore() {
+		this.isOpen = false;
 	}
 }
