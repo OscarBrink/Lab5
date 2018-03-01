@@ -6,4 +6,6 @@ public abstract class Event {
 	public int getTime() {
 		return time;
 	}
+	
+	public abstract String getEventName();
 }
