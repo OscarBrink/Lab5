@@ -18,8 +18,7 @@ public class StopSimEvent extends Event {
 
 	@Override
 	public void effect() {
-		// Stoppa simulationen.
-
+		state.stopSim();
 	}
 
 }

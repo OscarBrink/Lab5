@@ -1,13 +1,8 @@
 package supermarketSimulator.supermarketEvents;
 
 import java.util.ArrayList;
-import events.*;
-import genericSimulator.events.Event;
-import genericSimulator.events.EventQueue;
-import supermarketSimulator.supermarketState.Customer;
-import supermarketSimulator.supermarketState.SupermarketState;
-import supermarketSimulator.supermarketState.TimeState;
-import supermarketState.*;
+import genericSimulator.events.*;
+import supermarketSimulator.supermarketState.*;
 
 public class PickEvent extends Event {
 	private SupermarketState state;

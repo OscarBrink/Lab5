@@ -3,6 +3,7 @@ package supermarketSimulator.supermarketState;
 import genericSimulator.events.EventQueue;
 import genericSimulator.state.State;
 import supermarketSimulator.supermarketEvents.PickEvent;
+import supermarketSimulator.supermarketEvents.StartEvent;
 
 public class SupermarketState extends State {
 
@@ -15,6 +16,7 @@ public class SupermarketState extends State {
 
 	public SupermarketState(EventQueue queueList) {
 		this.queueList = queueList;
+		queueList.addEvent(new StartEvent(0, this));
 	}
 
 	public EventQueue getQueueList() {
@@ -56,7 +58,7 @@ public class SupermarketState extends State {
 		parameters[4] = //plocktid största
 		parameters[5] = //betaltid minsta
 		parameters[6] = //betaltid största
-		parameters[7] = //fröet
+		parameters[7] = 0;//fröet
 		return parameters;
 	}
 	
