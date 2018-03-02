@@ -1,9 +1,7 @@
 package supermarketSimulator.supermarketEvents;
 
-import genericSimulator.events.Event;
-import genericSimulator.events.EventQueue;
-import supermarketSimulator.supermarketState.SupermarketState;
-import supermarketSimulator.supermarketState.TimeState;
+import genericSimulator.events.*;
+import supermarketSimulator.supermarketState.*;
 
 public class StartEvent extends Event {
 	private SupermarketState state;
