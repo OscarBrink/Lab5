@@ -1,6 +1,5 @@
 package supermarketSimulator.supermarketEvents;
 
-import events.*;
 import genericSimulator.events.Event;
 import genericSimulator.events.EventQueue;
 import supermarketSimulator.supermarketState.SupermarketState;

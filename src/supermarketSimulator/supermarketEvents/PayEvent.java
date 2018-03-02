@@ -1,12 +1,10 @@
 package supermarketSimulator.supermarketEvents;
 
-import events.*;
 import genericSimulator.events.Event;
 import genericSimulator.events.EventQueue;
 import supermarketSimulator.supermarketState.Customer;
 import supermarketSimulator.supermarketState.SupermarketState;
 import supermarketSimulator.supermarketState.TimeState;
-import supermarketState.*;
 
 public class PayEvent extends Event {
 	private SupermarketState state;
