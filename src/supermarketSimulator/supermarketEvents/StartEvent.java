@@ -1,12 +1,14 @@
 package supermarketSimulator.supermarketEvents;
 
-import genericSimulator.events.Event;
-import supermarketSimulator.supermarketState.SupermarketState;
+import genericSimulator.events.*;
+import supermarketSimulator.supermarketState.*;
 
 public class StartEvent extends Event {
 	private SupermarketState state;
+	private EventQueue que;
 
 	public StartEvent(int time, SupermarketState state) {
+		this.que = que;
 		super.time = time;
 		this.state = state;
 
@@ -19,8 +21,8 @@ public class StartEvent extends Event {
 
 	@Override
 	public void effect() {
-		// Öppna butik m.m.
-
+		new ArriveEvent(TimeState.arrivalTime(), state, que);
+		// sätt state.open till true?
 	}
 
 }
