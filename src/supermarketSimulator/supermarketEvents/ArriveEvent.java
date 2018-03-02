@@ -1,11 +1,7 @@
 package supermarketSimulator.supermarketEvents;
 
-import genericSimulator.events.Event;
-import genericSimulator.events.EventQueue;
-import supermarketSimulator.supermarketState.Customer;
-import supermarketSimulator.supermarketState.CustomerFactory;
-import supermarketSimulator.supermarketState.SupermarketState;
-import supermarketSimulator.supermarketState.TimeState;
+import genericSimulator.events.*;
+import supermarketSimulator.supermarketState.*;
 
 public class ArriveEvent extends Event {
 	private SupermarketState state;
