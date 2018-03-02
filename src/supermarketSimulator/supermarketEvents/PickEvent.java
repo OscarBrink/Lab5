@@ -31,55 +31,13 @@ public class PickEvent extends Event {
 			new PayEvent(TimeState.paymentTime(), state, que, c);
 			state.decreaseFreeCashiers(); // One less free cashier.
 		} else {
-			cashQue.add(c); // Adding customer to que as no cashiers are available.
+			state.addCustomer(c); // Adding customer to que as no cashiers are available.
 			c.setStartQueue(state.getCurrTime());
-			queTot++;
+
 		}
 	}
 
-	/**
-	 * Gets the customer who is first in the cashierQue. Customer leaves the que.
-	 */
-	public static Customer getNextCustomer() {
-		Customer next = cashQue.get(0);
-		cashQue.remove(0);
-		return next;
-
-	}
-
-	/**
-	 * returns the amount of customers in cashierQue.
-	 */
-	public int getQueSize() {
-		return cashQue.size();
-	}
-
-	public static int getQueSize2() {
-		return cashQue.size();
-	}
-	
-	public int getCustomerNumber(){
-		return c.getCustomerNumber();
-	}
-	
-	/**
-	 * returns the total amount of customers that has been in cashierQue.
-	 */
-	public int getTotQueSize() {
-		return queTot;
-	}
-	
-	/**
-	 * @return queString a string representation of the cashQue.
-	 */
-	public String queToString(){
-		String queString = "[";
-		for(Customer c: cashQue)
-			queString+= c.getCustomerNumber() + ", ";
-		return queString + "]";
-	}
-	
-	public double getQueueTime(){
+	public double getQueueTime() {
 		return c.getQueueTime();
 	}
 
