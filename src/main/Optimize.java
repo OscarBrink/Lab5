@@ -1,11 +1,6 @@
 package main;
 
-import genericSimulator.Simulator;
-import genericSimulator.events.EventQueue;
-import supermarketSimulator.supermarketEvents.StartEvent;
-import supermarketSimulator.supermarketEvents.StopSimEvent;
 import supermarketSimulator.supermarketState.SupermarketState;
-import supermarketSimulator.supermarketView.SupermarketView;
 
 public class Optimize {
 	
@@ -25,7 +20,6 @@ public class Optimize {
 
 	public Optimize(double stopTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax, double payMin, double payMax, long seed, int openCashiers) {
 			
-		//run(stopTime, maxAmountCustomers, lambda, PickMin, PickMax, payMin, payMax, seed, openCashiers);
 		int i = 0;
 		while(i < numberOfOptimizations) {
 			if (isRunning) {
@@ -53,8 +47,6 @@ public class Optimize {
 		while(!runSim.getState().getEmergencyBreak()) {}
 		isRunning = false;
 	}
-
-
 
 		static int optimizeCashiers() {
 			return 3;
