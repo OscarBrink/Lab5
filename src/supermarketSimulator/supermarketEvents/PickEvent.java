@@ -1,20 +1,15 @@
 package supermarketSimulator.supermarketEvents;
 
 import java.util.ArrayList;
-import events.*;
-import genericSimulator.events.Event;
-import genericSimulator.events.EventQueue;
-import supermarketSimulator.supermarketState.Customer;
-import supermarketSimulator.supermarketState.SupermarketState;
-import supermarketSimulator.supermarketState.TimeState;
-import supermarketState.*;
+import genericSimulator.events.*;
+import supermarketSimulator.supermarketState.*;
 
 public class PickEvent extends Event {
 	private SupermarketState state;
 	private EventQueue que;
 	private Customer c;
 	private static ArrayList<Customer> cashQue = new ArrayList<Customer>();
-	private static int queTot;
+	private static int queTot = 0;
 
 	public PickEvent(double time, SupermarketState state, EventQueue que, Customer c) {
 		this.c = c;
@@ -58,6 +53,10 @@ public class PickEvent extends Event {
 	public int getQueSize() {
 		return cashQue.size();
 	}
+
+	public static int getQueSize2() {
+		return cashQue.size();
+	}
 	
 	public int getCustomerNumber(){
 		return c.getCustomerNumber();
@@ -78,6 +77,10 @@ public class PickEvent extends Event {
 		for(Customer c: cashQue)
 			queString+= c.getCustomerNumber() + ", ";
 		return queString + "]";
+	}
+	
+	public double getQueueTime(){
+		return c.getQueueTime();
 	}
 
 	@Override

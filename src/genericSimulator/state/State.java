@@ -3,7 +3,20 @@ package genericSimulator.state;
 import java.util.Observable;
 
 public class State extends Observable { 
-	boolean emergencyBreak = false;
+	private boolean emergencyBreak = false;
 	int currentTime;
+
+	public boolean getEmergencyBreak() {
+		return emergencyBreak;
+	}
+
+	public void stopSim() {
+		emergencyBreak = true;
+	}
+
+	@Override
+	public synchronized void setChanged() {
+		super.setChanged();
+	}
 
 }

@@ -10,13 +10,21 @@ public class Simulator {
 	private State state;
 	private View view;
 
+
 	public Simulator(EventQueue eventQueue, State state, View view) {
 		this.eventQueue = eventQueue;
 		this.state = state;
 		this.view = view;
+
+		state.addObserver(view);
 	}
 
-	void run() {
-		// TODO
+	public void run() {
+		while (!state.getEmergencyBreak()) {
+			state.setChanged();
+			state.notifyObservers();
+			eventQueue.getFirst().effect();
+			eventQueue.removeFirst();
+		}
 	}
 }

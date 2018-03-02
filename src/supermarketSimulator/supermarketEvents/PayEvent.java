@@ -1,12 +1,7 @@
 package supermarketSimulator.supermarketEvents;
 
-import events.*;
-import genericSimulator.events.Event;
-import genericSimulator.events.EventQueue;
-import supermarketSimulator.supermarketState.Customer;
-import supermarketSimulator.supermarketState.SupermarketState;
-import supermarketSimulator.supermarketState.TimeState;
-import supermarketState.*;
+import genericSimulator.events.*;
+import supermarketSimulator.supermarketState.*;
 
 public class PayEvent extends Event {
 	private SupermarketState state;
@@ -37,7 +32,7 @@ public class PayEvent extends Event {
 	public void effect() {
 		state.decreaseCurrCustomers();
 		state.finishedCustomer();
-		if (PickEvent.getQueSize() > 0) {
+		if (PickEvent.getQueSize2() > 0) {
 			new PayEvent(TimeState.paymentTime(), state, que, PickEvent.getNextCustomer()); // Next customer pays.
 		} else {
 			state.increaseFreeCashiers(); // Noone in que, Free cashier.

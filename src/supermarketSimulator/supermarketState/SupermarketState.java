@@ -3,15 +3,16 @@ package supermarketSimulator.supermarketState;
 import genericSimulator.events.EventQueue;
 import genericSimulator.state.State;
 import supermarketSimulator.supermarketEvents.PickEvent;
+import supermarketSimulator.supermarketEvents.StartEvent;
 
 public class SupermarketState extends State {
 
 	private int finishedCustomers, currentCustomers, customersMissed, maxCustomers;
-	private double queueTime, idleCashierTime;
-	private int nrOfFreeCashiers, openCashiers;
+	private double queueTime = 0.0, idleCashierTime;
+	private int nrOfFreeCashiers = 2, openCashiers = 2;
 	private double currentTime;
 	private EventQueue queueList;
-	private boolean isOpen;
+	private boolean isOpen = true;
 
 	public SupermarketState(EventQueue queueList) {
 		this.queueList = queueList;
@@ -28,19 +29,19 @@ public class SupermarketState extends State {
 	public String[] supermarketInfo(){
 		int size = queueListSize();
 		String[] info = new String[13];
-		info[0] = String.valueOf(queueList.get(size-1).getTime());
-		info[1] = queueList.get(size-1).getEventName();
-		info[2] = String.valueOf(((PickEvent) (queueList.get(size-1))).getCustomerNumber());
-		info[3] = isOpen();
-		info[4] = String.valueOf(nrOfFreeCashiers);
-		info[5] = String.valueOf(idleCashierTime);
-		info[6] = String.valueOf(currentCustomers);
-		info[7] = String.valueOf(finishedCustomers);
-		info[8] = String.valueOf(customersMissed);
-		info[9] = String.valueOf(((PickEvent) (queueList.get(size-1))).getTotQueSize());
-		info[10] = String.valueOf(queueTime);
-		info[11] = String.valueOf(((PickEvent) (queueList.get(size-1))).getQueSize());
-		info[12] = ((PickEvent) (queueList.get(size-1))).queToString();
+		info[0] = String.valueOf(queueList.getFirst().getTime()); //Händelsetidpunkt
+		info[1] = queueList.getFirst().getEventName(); //Händelsenamn
+		info[2] = "";//String.valueOf(((PickEvent) (queueList.get(size-1))).getCustomerNumber()); //Kundnr
+		info[3] = isOpen(); //Affären öppen eller stängd
+		info[4] = String.valueOf(nrOfFreeCashiers); //Lediga kassor
+		info[5] = String.valueOf(idleCashierTime); //Tid som kassor varit lediga
+		info[6] = String.valueOf(currentCustomers); //Nuvarande kunder i affären
+		info[7] = String.valueOf(finishedCustomers); //Kunder som betalat
+		info[8] = String.valueOf(customersMissed); //Kunder som inte kom in
+		info[9] = String.valueOf(queueTime); //Totala antalet kunder som köat
+		info[10] = String.valueOf(queueTime); //Summan tid kunder har köat
+		info[11] = "queueueuTot";//String.valueOf(((PickEvent) (queueList.get(size-1))).getQueSize()); //Hur lång kassakön är
+		info[12] = "queueu";//((PickEvent) (queueList.get(size-1))).queToString(); //Skriver ut kassakön
 		return info;
 	}
 	
@@ -56,7 +57,7 @@ public class SupermarketState extends State {
 		parameters[4] = //plocktid största
 		parameters[5] = //betaltid minsta
 		parameters[6] = //betaltid största
-		parameters[7] = //fröet
+		parameters[7] = 0;//fröet
 		return parameters;
 	}
 	
@@ -67,13 +68,13 @@ public class SupermarketState extends State {
 		int size = queueListSize();
 		double[] result = new double[8];
 		result[0] = //Totala antalet kunder som kommit till affären, oavsett öppet eller stängt.
-		result[1] = finishedCustomers;
-		result[2] = customersMissed;
-		result[3] = openCashiers;
-		result[4] = idleCashierTime;
-		result[5] = queueList.get(size-1).getTime();
-		result[6] = maxCustomers;
-		result[7] = //Total tid maxantalet på kunder har köat.
+		result[1] = finishedCustomers; //Kunder som betalat
+		result[2] = customersMissed; //Kunder som inte kom in
+		result[3] = openCashiers; //Antal tillgängliga kassor
+		result[4] = idleCashierTime; //Summan av tid kassor varit lediga
+		result[5] = queueList.get(size-1).getTime(); //Summan av tiden affären varit öppen.
+		result[6] = (((PickEvent) (queueList.get(size-1))).getTotQueSize()); //Max antal kunder som köat
+		result[7] = (((PickEvent) (queueList.get(size-1))).getQueueTime()); //Summan av tid kunder köat.
 		return result;
 	}
 
@@ -169,5 +170,9 @@ public class SupermarketState extends State {
 	 */
 	public void decreaseFreeCashiers() {
 		this.nrOfFreeCashiers--;
+	}
+
+	public void setMaxCustomers(int maxCustomers) {
+		this.maxCustomers = maxCustomers;
 	}
 }

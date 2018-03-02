@@ -2,11 +2,13 @@
 .classpath
 .project
 .settings/
+out/
  
 # Intellij
 .idea/
 *.iml
 *.iws
+out/
  
 # Mac
 .DS_Store
@@ -15,3 +17,7 @@
 log/
 target/
 /bin/
+
+# Oscar localTest
+localTest/
+
