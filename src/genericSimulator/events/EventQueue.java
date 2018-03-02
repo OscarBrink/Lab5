@@ -67,7 +67,7 @@ public class EventQueue {
 	/**
 	 * Gets the first object in the queue.
 	 */
-	public Object getFirst() throws NoSuchElementException {
+	public Event getFirst() throws NoSuchElementException {
 		if (size() == 0) {
 			throw new NoSuchElementException();
 		}

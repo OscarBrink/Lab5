@@ -6,7 +6,7 @@ import supermarketSimulator.supermarketState.SupermarketState;
 public class StopSimEvent extends Event {
 	private SupermarketState state;
 
-	public StopSimEvent(int time, SupermarketState state) {
+	public StopSimEvent(double time, SupermarketState state) {
 		super.time = time;
 		this.state = state;
 	}

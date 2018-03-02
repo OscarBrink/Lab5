@@ -9,12 +9,14 @@ import supermarketSimulator.supermarketView.SupermarketView;
 
 public class RunSimulator {
 
-	public static void runSimulation(double stopTime) {
+	public RunSimulator(double stopTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax, double payMin, double payMax, long seed) {
 
 		EventQueue eventQueue = new EventQueue();
 		SupermarketState state = new SupermarketState(eventQueue);
+
 		eventQueue.addEvent(new StartEvent(0, state));
-		eventQueue.addEvent(new StopSimEvent(stopTime));
+		eventQueue.addEvent(new StopSimEvent(stopTime, state));
+
 		SupermarketView view = new SupermarketView(state);
 
 		Simulator simulator = new Simulator(eventQueue, state, view);

@@ -13,4 +13,10 @@ public class State extends Observable {
 	public void stopSim() {
 		emergencyBreak = true;
 	}
+
+	@Override
+	public synchronized void setChanged() {
+		super.setChanged();
+	}
+
 }

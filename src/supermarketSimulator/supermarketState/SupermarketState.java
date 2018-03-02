@@ -32,7 +32,7 @@ public class SupermarketState extends State {
 		String[] info = new String[13];
 		info[0] = String.valueOf(queueList.get(size-1).getTime()); //Händelsetidpunkt
 		info[1] = queueList.get(size-1).getEventName(); //Händelsenamn
-		info[2] = String.valueOf(((PickEvent) (queueList.get(size-1))).getCustomerNumber()); //Kundnr
+		info[2] = "";//String.valueOf(((PickEvent) (queueList.get(size-1))).getCustomerNumber()); //Kundnr
 		info[3] = isOpen(); //Affären öppen eller stängd
 		info[4] = String.valueOf(nrOfFreeCashiers); //Lediga kassor
 		info[5] = String.valueOf(idleCashierTime); //Tid som kassor varit lediga

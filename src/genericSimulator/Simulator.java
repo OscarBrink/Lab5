@@ -3,7 +3,6 @@ package genericSimulator;
 import genericSimulator.events.EventQueue;
 import genericSimulator.state.State;
 import genericSimulator.view.View;
-import supermarketSimulator.supermarketEvents.StartEvent;
 
 public class Simulator {
 
@@ -16,11 +15,16 @@ public class Simulator {
 		this.eventQueue = eventQueue;
 		this.state = state;
 		this.view = view;
+
+		state.addObserver(view);
 	}
 
 	public void run() {
 		while (!state.getEmergencyBreak()) {
-			// TODO
+			state.setChanged();
+			state.notifyObservers();
+			eventQueue.getFirst().effect();
+			eventQueue.removeFirst();
 		}
 	}
 }

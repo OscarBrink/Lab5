@@ -53,6 +53,10 @@ public class PickEvent extends Event {
 	public int getQueSize() {
 		return cashQue.size();
 	}
+
+	public static int getQueSize2() {
+		return cashQue.size();
+	}
 	
 	public int getCustomerNumber(){
 		return c.getCustomerNumber();
