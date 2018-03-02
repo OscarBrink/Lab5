@@ -8,15 +8,14 @@ import supermarketSimulator.supermarketEvents.StartEvent;
 public class SupermarketState extends State {
 
 	private int finishedCustomers, currentCustomers, customersMissed, maxCustomers;
-	private double queueTime, idleCashierTime;
-	private int nrOfFreeCashiers, openCashiers;
+	private double queueTime = 0.0, idleCashierTime;
+	private int nrOfFreeCashiers = 2, openCashiers = 2;
 	private double currentTime;
 	private EventQueue queueList;
-	private boolean isOpen;
+	private boolean isOpen = true;
 
 	public SupermarketState(EventQueue queueList) {
 		this.queueList = queueList;
-		queueList.addEvent(new StartEvent(0, this));
 	}
 
 	public EventQueue getQueueList() {
@@ -30,8 +29,8 @@ public class SupermarketState extends State {
 	public String[] supermarketInfo(){
 		int size = queueListSize();
 		String[] info = new String[13];
-		info[0] = String.valueOf(queueList.get(size-1).getTime()); //Händelsetidpunkt
-		info[1] = queueList.get(size-1).getEventName(); //Händelsenamn
+		info[0] = String.valueOf(queueList.getFirst().getTime()); //Händelsetidpunkt
+		info[1] = queueList.getFirst().getEventName(); //Händelsenamn
 		info[2] = "";//String.valueOf(((PickEvent) (queueList.get(size-1))).getCustomerNumber()); //Kundnr
 		info[3] = isOpen(); //Affären öppen eller stängd
 		info[4] = String.valueOf(nrOfFreeCashiers); //Lediga kassor
@@ -39,10 +38,10 @@ public class SupermarketState extends State {
 		info[6] = String.valueOf(currentCustomers); //Nuvarande kunder i affären
 		info[7] = String.valueOf(finishedCustomers); //Kunder som betalat
 		info[8] = String.valueOf(customersMissed); //Kunder som inte kom in
-		info[9] = String.valueOf(((PickEvent) (queueList.get(size-1))).getTotQueSize()); //Totala antalet kunder som köat
-		info[10] = String.valueOf((((PickEvent) (queueList.get(size-1))).getQueueTime())); //Summan tid kunder har köat
-		info[11] = String.valueOf(((PickEvent) (queueList.get(size-1))).getQueSize()); //Hur lång kassakön är
-		info[12] = ((PickEvent) (queueList.get(size-1))).queToString(); //Skriver ut kassakön
+		info[9] = String.valueOf(queueTime); //Totala antalet kunder som köat
+		info[10] = String.valueOf(queueTime); //Summan tid kunder har köat
+		info[11] = "queueueuTot";//String.valueOf(((PickEvent) (queueList.get(size-1))).getQueSize()); //Hur lång kassakön är
+		info[12] = "queueu";//((PickEvent) (queueList.get(size-1))).queToString(); //Skriver ut kassakön
 		return info;
 	}
 	
@@ -171,5 +170,9 @@ public class SupermarketState extends State {
 	 */
 	public void decreaseFreeCashiers() {
 		this.nrOfFreeCashiers--;
+	}
+
+	public void setMaxCustomers(int maxCustomers) {
+		this.maxCustomers = maxCustomers;
 	}
 }

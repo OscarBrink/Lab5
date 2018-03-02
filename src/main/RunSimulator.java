@@ -13,8 +13,9 @@ public class RunSimulator {
 
 		EventQueue eventQueue = new EventQueue();
 		SupermarketState state = new SupermarketState(eventQueue);
+		state.setMaxCustomers(maxAmountCustomers);
 
-		eventQueue.addEvent(new StartEvent(0, state));
+		eventQueue.addEvent(new StartEvent(0, state, eventQueue));
 		eventQueue.addEvent(new StopSimEvent(stopTime, state));
 
 		SupermarketView view = new SupermarketView(state);

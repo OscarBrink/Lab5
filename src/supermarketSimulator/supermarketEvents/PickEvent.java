@@ -9,7 +9,7 @@ public class PickEvent extends Event {
 	private EventQueue que;
 	private Customer c;
 	private static ArrayList<Customer> cashQue = new ArrayList<Customer>();
-	private static int queTot;
+	private static int queTot = 0;
 
 	public PickEvent(double time, SupermarketState state, EventQueue que, Customer c) {
 		this.c = c;
