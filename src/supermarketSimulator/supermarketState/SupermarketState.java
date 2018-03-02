@@ -9,7 +9,8 @@ public class SupermarketState extends State {
 
 	private int finishedCustomers, currentCustomers, customersMissed, maxCustomers;
 	private double queueTime = 0.0, idleCashierTime;
-	private int nrOfFreeCashiers = 2, openCashiers = 2;
+	private int openCashiers;
+	private int nrOfFreeCashiers = openCashiers;
 	private double currentTime;
 	private EventQueue queueList;
 	private boolean isOpen = true;
@@ -101,6 +102,8 @@ public class SupermarketState extends State {
 	public void missedCustomer() {
 		this.customersMissed++;
 	}
+	
+	
 
 	/**
 	 * Increases current nr of customers in the store.
@@ -174,5 +177,9 @@ public class SupermarketState extends State {
 
 	public void setMaxCustomers(int maxCustomers) {
 		this.maxCustomers = maxCustomers;
+	}
+	
+	public void setOpenCashiers(int openCashiers) {
+		this.openCashiers = openCashiers;
 	}
 }

@@ -8,6 +8,7 @@ import supermarketSimulator.supermarketState.SupermarketState;
 import supermarketSimulator.supermarketView.SupermarketView;
 
 public class Optimize {
+	
 	static double stopTime;
 	static int maxAmountCustomers;
 	static double lambda;
@@ -16,10 +17,28 @@ public class Optimize {
 	static double payMin;
 	static double payMax;
 	static long seed;
-	static int numberOfCashiers;
+	static int openCashiers;
 	static int numberOfOptimizations= 10;
+	boolean isRunning;
+	SupermarketState state;
 	
-	static RunSimulator runSim = new RunSimulator(
+
+	public Optimize(double stopTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax, double payMin, double payMax, long seed, int openCashiers) {
+			
+		//run(stopTime, maxAmountCustomers, lambda, PickMin, PickMax, payMin, payMax, seed, openCashiers);
+		int i = 0;
+		while(i < numberOfOptimizations) {
+			if (isRunning) {
+			} else {
+				openCashiers = optimizeCashiers();
+				run(stopTime, maxAmountCustomers, lambda, PickMin, PickMax, payMin, payMax, seed, openCashiers);
+				i++;
+			}
+		}
+	}
+	
+	void run(double stopTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax, double payMin, double payMax, long seed, int openCashiers) {
+		RunSimulator runSim = new RunSimulator(
 			stopTime,
 			maxAmountCustomers,
 			lambda,
@@ -28,49 +47,21 @@ public class Optimize {
 			payMin,
 			payMax,
 			seed,
-			numberOfCashiers
-	);
-	
-	
-	public Optimize(double stopTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax, double payMin, double payMax, long seed) {
-
-		EventQueue eventQueue = new EventQueue();
-		SupermarketState state = new SupermarketState(eventQueue);
-		state.setMaxCustomers(maxAmountCustomers);
-
-		eventQueue.addEvent(new StartEvent(0, state, eventQueue));
-		eventQueue.addEvent(new StopSimEvent(stopTime, state));
-
-		SupermarketView view = new SupermarketView(state);
-
-		Simulator simulator = new Simulator(eventQueue, state, view);
-
-		
-		int i = 0;
-		while(i < numberOfOptimizations) {
-			if (!state.getEmergencyBreak()) {
-			} else {
-				numberOfCashiers = optimizeCashiers();
-				runSim = new RunSimulator(stopTime, maxAmountCustomers, lambda, PickMin, PickMax, payMin, payMax, seed, numberOfCashiers);
-			}
-		}
+			openCashiers
+			
+	);	isRunning = true;
+		while(!runSim.getState().getEmergencyBreak()) {}
+		isRunning = false;
 	}
-	
-void run(double stopTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax, double payMin, double payMax, long seed, int numberOfCashiers) {
-	
-
-	
-}
 
 
 
-
-static int optimizeCashiers() {
-	while(true) {
+		static int optimizeCashiers() {
+			return 3;
 		
 	}
 }
 	
 	
 	
-}
+
