@@ -1,6 +1,5 @@
 package supermarketSimulator.supermarketEvents;
 
-import java.util.ArrayList;
 import genericSimulator.events.*;
 import supermarketSimulator.supermarketState.*;
 
@@ -8,8 +7,7 @@ public class PickEvent extends Event {
 	private SupermarketState state;
 	private EventQueue que;
 	private Customer c;
-	private static ArrayList<Customer> cashQue = new ArrayList<Customer>();
-	private static int queTot = 0;
+	
 
 	public PickEvent(double time, SupermarketState state, EventQueue que, Customer c) {
 		this.c = c;
@@ -39,6 +37,10 @@ public class PickEvent extends Event {
 
 	public double getQueueTime() {
 		return c.getQueueTime();
+	}
+	
+	public int getCustomerNumber() {
+		return c.getCustomerNumber();
 	}
 
 	@Override

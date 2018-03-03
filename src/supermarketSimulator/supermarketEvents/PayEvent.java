@@ -23,6 +23,10 @@ public class PayEvent extends Event {
 	public String getEventName() {
 		return "PayEvent";
 	}
+	
+	public int getCustomerNumber() {
+		return c.getCustomerNumber();
+	}
 
 	/**
 	 * Customer is done paying and leaves. Current nr of customers decreased. If

@@ -1,11 +1,10 @@
 package supermarketSimulator.supermarketState;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import genericSimulator.events.EventQueue;
 import genericSimulator.state.State;
-import supermarketSimulator.supermarketEvents.PickEvent;
-import supermarketSimulator.supermarketEvents.StartEvent;
 
 public class SupermarketState extends State {
 
@@ -13,7 +12,8 @@ public class SupermarketState extends State {
 	private double queueTime = 0.0, idleCashierTime;
 	private int openCashiers, queTot = 0;
 	private int nrOfFreeCashiers = openCashiers;
-	private double currentTime;
+	private double currentTime, lambda,pickMin, pickMax, payMin, payMax;
+	private long seed;
 	private EventQueue queueList;
 	private boolean isOpen = true;
 	private ArrayList<Customer> cashierQueue = new ArrayList<Customer>();
@@ -28,72 +28,65 @@ public class SupermarketState extends State {
 
 	/**
 	 * Puts all the variables for each event into an array.
-	 * 
 	 * @return info Array with all the variables.
 	 */
 	public String[] supermarketInfo() {
-		int size = queueListSize();
+		DecimalFormat df = new DecimalFormat("#0.00");
 		String[] info = new String[13];
-		info[0] = String.valueOf(queueList.getFirst().getTime()); // Händelsetidpunkt
+		info[0] = String.valueOf(df.format(queueList.getFirst().getTime())); // Händelsetidpunkt
 		info[1] = queueList.getFirst().getEventName(); // Händelsenamn
-		info[2] = "";// String.valueOf(((PickEvent) (queueList.get(size-1))).getCustomerNumber());
-						// //Kundnr
+		info[2] = String.valueOf(queueList.getFirst().getCustomerNumber()); //Kundnr
 		info[3] = isOpen(); // Affären öppen eller stängd
 		info[4] = String.valueOf(nrOfFreeCashiers); // Lediga kassor
-		info[5] = String.valueOf(idleCashierTime); // Tid som kassor varit lediga
-		info[6] = String.valueOf(currentCustomers); // Nuvarande kunder i affären
+		info[5] = String.valueOf(df.format(idleCashierTime)); // Tid som kassor varit lediga
+		info[6] = String.valueOf((currentCustomers <= maxCustomers) ? currentCustomers : maxCustomers); // Nuvarande kunder i affären
 		info[7] = String.valueOf(finishedCustomers); // Kunder som betalat
 		info[8] = String.valueOf(customersMissed); // Kunder som inte kom in
-		info[9] = String.valueOf(queueTime); // Totala antalet kunder som köat
-		info[10] = String.valueOf(queueTime); // Summan tid kunder har köat
-		info[11] = "queueueuTot";// String.valueOf(((PickEvent) (queueList.get(size-1))).getQueSize()); //Hur
-									// lång kassakön är
-		info[12] = "queueu";// ((PickEvent) (queueList.get(size-1))).queToString(); //Skriver ut kassakön
+		info[9] = String.valueOf(queTot); // Totala antalet kunder som köat
+		info[10] = String.valueOf(df.format(queueTime)); // Summan tid kunder har köat
+		info[11] = String.valueOf(getCashierQueSize()); //Hur lång kassakön är
+		info[12] = toStringCashQue(); //Skriver ut kassakön
 		return info;
 	}
 
 	/**
 	 * Puts the start parameters for the simulator into an array.
+	 * @return parameters Array of the simulators parameters.
 	 */
 	public double[] supermarketParameters() {
 		double[] parameters = new double[8];
 		parameters[0] = openCashiers;
 		parameters[1] = maxCustomers;
-		parameters[2] = // Ankomsthatighet
-				parameters[3] = // plocktid minsta
-						parameters[4] = // plocktid största
-								parameters[5] = // betaltid minsta
-										parameters[6] = // betaltid största
-												parameters[7] = 0;// fröet
+		parameters[2] = lambda; // Ankomsthatighet
+		parameters[3] = pickMin; // plocktid minsta
+		parameters[4] = pickMax; // plocktid största
+		parameters[5] = payMin; // betaltid minsta
+		parameters[6] = payMax; // betaltid största
+		parameters[7] = seed; // fröet
 		return parameters;
 	}
 
 	/**
 	 * Puts the result of the simulation into an array.
+	 * @return result Array of the result from the simulation.
 	 */
 	public double[] supermarketResult() {
-		int size = queueListSize();
 		double[] result = new double[8];
-		result[0] = // Totala antalet kunder som kommit till affären, oavsett öppet eller stängt.
-				result[1] = finishedCustomers; // Kunder som betalat
+		result[0] = currentCustomers;// Totala antalet kunder som kommit till affären, oavsett öppet eller stängt.
+		result[1] = finishedCustomers; // Kunder som betalat
 		result[2] = customersMissed; // Kunder som inte kom in
 		result[3] = openCashiers; // Antal tillgängliga kassor
 		result[4] = idleCashierTime; // Summan av tid kassor varit lediga
-		result[5] = queueList.get(size - 1).getTime(); // Summan av tiden affären varit öppen.
-		result[6] = (queTot); // Max antal kunder som köat
+		result[5] = queueList.getFirst().getTime(); // Summan av tiden affären varit öppen.
+		result[6] = queTot; // Max antal kunder som köat
 		result[7] = (this.queueTime); // Summan av tid kunder köat.
 		return result;
 	}
 
-	public int queueListSize() {
-		return queueList.size();
-	}
-
 	/**
-	 * Adds a customer to the cashierqueue.
-	 * 
-	 * @param c
-	 *            The customer to be added.
+	 * Adds a customer to the cashierqueue and increases total of customers that has
+	 * had to queue.
+	 * @param c The customer to be added.
 	 */
 	public void addCustomer(Customer c) {
 		this.cashierQueue.add(c);
@@ -109,6 +102,9 @@ public class SupermarketState extends State {
 		return next;
 	}
 
+	/**
+	 * @return this.cashierQueue.size(); Size of the current cashierQue.
+	 */
 	public int getCashierQueSize() {
 		return this.cashierQueue.size();
 	}
@@ -124,6 +120,10 @@ public class SupermarketState extends State {
 		return queString + "]";
 	}
 
+	/**
+	 * Checks if the store is full.
+	 * @return Ö if store isn't full, otherwise returns S.
+	 */
 	private String isOpen() {
 		return (currentCustomers <= maxCustomers) ? "Ö" : "S";
 	}
@@ -133,7 +133,7 @@ public class SupermarketState extends State {
 	 * the store. Will be called when a new arrival comes.
 	 */
 	public boolean canEnter() {
-		return currentCustomers < maxCustomers;
+		return currentCustomers <= maxCustomers;
 	}
 
 	/**
@@ -158,6 +158,10 @@ public class SupermarketState extends State {
 		this.currentCustomers--;
 	}
 
+	
+	/**
+	 * Increases finished customers.
+	 */
 	public void finishedCustomer() {
 		this.finishedCustomers++;
 	}
@@ -221,4 +225,32 @@ public class SupermarketState extends State {
 	public void setOpenCashiers(int openCashiers) {
 		this.openCashiers = openCashiers;
 	}
+
+	public void setLambda(double lambda) {
+		this.lambda = lambda;	
+	}
+
+	public void setPickMin(double pickMin) {
+		this.pickMin = pickMin;
+	}
+
+	public void setPickMax(double pickMax) {
+		this.pickMax = pickMax;
+	}
+
+	public void setPayMin(double payMin) {
+		this.payMin = payMin;
+	}
+
+	public void setPayMax(double payMax) {
+		this.payMax = payMax;
+	}
+
+	public void setSeed(long seed) {
+		this.seed = seed;
+	}
+	
+	
+	
+	
 }

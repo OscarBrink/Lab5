@@ -25,4 +25,9 @@ public class StartEvent extends Event {
 
 	}
 
+	public int getCustomerNumber() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

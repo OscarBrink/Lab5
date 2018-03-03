@@ -43,4 +43,8 @@ public class ArriveEvent extends Event {
 		}
 
 	}
+	
+	public int getCustomerNumber() {
+		return c.getCustomerNumber();
+	}
 }
