@@ -17,7 +17,7 @@ public class CloseSupermarketEvent extends Event {
 
 	@Override
 	public String getEventName() {
-		return "CloseSupermarketEvent";
+		return "CloseEvent";
 	}
 
 	/**
