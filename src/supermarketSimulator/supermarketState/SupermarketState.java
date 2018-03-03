@@ -8,7 +8,7 @@ import genericSimulator.state.State;
 
 public class SupermarketState extends State {
 
-	private int finishedCustomers, currentCustomers, customersMissed, maxCustomers;
+	private int finishedCustomers, currentCustomers, customersMissed, maxCustomers,totalCustomers;
 	private double queueTime = 0.0, idleCashierTime;
 	private int openCashiers, queTot = 0;
 	private int nrOfFreeCashiers = openCashiers;
@@ -39,7 +39,7 @@ public class SupermarketState extends State {
 		info[3] = isOpen(); // Affären öppen eller stängd
 		info[4] = String.valueOf(nrOfFreeCashiers); // Lediga kassor
 		info[5] = String.valueOf(df.format(idleCashierTime)); // Tid som kassor varit lediga
-		info[6] = String.valueOf((currentCustomers <= maxCustomers) ? currentCustomers : maxCustomers); // Nuvarande kunder i affären
+		info[6] = String.valueOf(currentCustomers); // Nuvarande kunder i affären
 		info[7] = String.valueOf(finishedCustomers); // Kunder som betalat
 		info[8] = String.valueOf(customersMissed); // Kunder som inte kom in
 		info[9] = String.valueOf(queTot); // Totala antalet kunder som köat
@@ -72,7 +72,7 @@ public class SupermarketState extends State {
 	 */
 	public double[] supermarketResult() {
 		double[] result = new double[8];
-		result[0] = currentCustomers;// Totala antalet kunder som kommit till affären, oavsett öppet eller stängt.
+		result[0] = totalCustomers;// Totala antalet kunder som kommit till affären, oavsett öppet eller stängt.
 		result[1] = finishedCustomers; // Kunder som betalat
 		result[2] = customersMissed; // Kunder som inte kom in
 		result[3] = openCashiers; // Antal tillgängliga kassor
@@ -125,7 +125,7 @@ public class SupermarketState extends State {
 	 * @return Ö if store isn't full, otherwise returns S.
 	 */
 	private String isOpen() {
-		return (currentCustomers <= maxCustomers) ? "Ö" : "S";
+		return (currentCustomers < maxCustomers) ? "Ö" : "S";
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class SupermarketState extends State {
 	 * the store. Will be called when a new arrival comes.
 	 */
 	public boolean canEnter() {
-		return currentCustomers <= maxCustomers;
+		return currentCustomers < maxCustomers;
 	}
 
 	/**
@@ -216,6 +216,13 @@ public class SupermarketState extends State {
 	 */
 	public void decreaseFreeCashiers() {
 		this.nrOfFreeCashiers--;
+	}
+	
+	/**
+	 * Increases the total amount of customers that arrives at the store.
+	 */
+	public void increaseTotCustomers(){
+		totalCustomers++;
 	}
 
 	public void setMaxCustomers(int maxCustomers) {

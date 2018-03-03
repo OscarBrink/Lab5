@@ -29,6 +29,7 @@ public class ArriveEvent extends Event {
 	 */
 	@Override
 	public void effect() {
+		state.increaseTotCustomers();
 		if (state.Open()) {
 			if (state.canEnter()) {
 				state.increaseCurrCustomers();
