@@ -25,7 +25,6 @@ public class EventQueue {
 	 * Uses binary search to find position to insert new event.
 	 */
 	private int findInsertionPosition(Event event) {
-		int loopVar = 0;
 		if (queueList.isEmpty()) {
 			return 0;
 		}
@@ -43,7 +42,6 @@ public class EventQueue {
 		while ((queueList.get(searchVal - 1).getTime() > eventTime
 				|| queueList.get(searchVal).getTime() < eventTime)) {
 			searchVal = (lowestChecked + highestChecked ) / 2;
-			loopVar++;
 
 			if (queueList.get(searchVal).getTime() < eventTime) {
 				lowestChecked = searchVal + 1;
