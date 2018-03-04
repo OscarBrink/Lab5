@@ -34,6 +34,7 @@ public class PayEvent extends Event {
 	 */
 	@Override
 	public void effect() {
+		state.increaseIdleTime();
 		state.decreaseCurrCustomers();
 		state.finishedCustomer();
 		if (state.getCashierQueSize() > 0) {

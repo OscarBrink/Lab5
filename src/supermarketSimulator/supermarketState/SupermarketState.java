@@ -186,6 +186,12 @@ public class SupermarketState extends State {
 	public int getFreeCashiers() {
 		return this.nrOfFreeCashiers;
 	}
+	
+	public void increaseIdleTime(){
+		if(nrOfFreeCashiers>0){
+			idleCashierTime += getCurrTime();
+		}
+	}
 
 	/**
 	 * @return currentTime The current time.
@@ -256,8 +262,5 @@ public class SupermarketState extends State {
 	public void setSeed(long seed) {
 		this.seed = seed;
 	}
-	
-	
-	
 	
 }

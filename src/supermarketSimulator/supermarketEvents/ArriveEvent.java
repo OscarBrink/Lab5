@@ -30,6 +30,7 @@ public class ArriveEvent extends Event {
 	@Override
 	public void effect() {
 		state.increaseTotCustomers();
+		state.increaseIdleTime();
 		if (state.Open()) {
 			if (state.canEnter()) {
 				state.increaseCurrCustomers();
@@ -44,6 +45,7 @@ public class ArriveEvent extends Event {
 		}
 
 	}
+	
 	
 	public int getCustomerNumber() {
 		return c.getCustomerNumber();
