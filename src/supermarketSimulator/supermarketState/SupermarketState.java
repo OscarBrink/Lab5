@@ -33,9 +33,12 @@ public class SupermarketState extends State {
 	public String[] supermarketInfo() {
 		DecimalFormat df = new DecimalFormat("#0.00");
 		String[] info = new String[13];
-		info[0] = String.valueOf(df.format(queueList.getFirst().getTime())); // Händelsetidpunkt
-		info[1] = queueList.getFirst().getEventName(); // Händelsenamn
-		info[2] = String.valueOf(queueList.getFirst().getCustomerNumber()); //Kundnr
+
+		String[] eventInfo = queueList.getFirst().getPrintInfo();
+		info[0] = eventInfo[0]; // Händelsetidpunkt
+		info[1] = eventInfo[1]; // Händelsenamn
+		info[2] = eventInfo[2]; // Kundnr
+
 		info[3] = isOpen(); // Affären öppen eller stängd
 		info[4] = String.valueOf(nrOfFreeCashiers); // Lediga kassor
 		info[5] = String.valueOf(df.format(idleCashierTime)); // Tid som kassor varit lediga

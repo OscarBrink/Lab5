@@ -29,9 +29,13 @@ public class CloseSupermarketEvent extends Event {
 
 	}
 
-	public int getCustomerNumber() {
-		// TODO Auto-generated method stub
-		return 0;
+	@Override
+	public String[] getPrintInfo() {
+		return new String[]{
+				String.format("%.2f", time),
+				getEventName(),
+				""
+		};
 	}
 
 }

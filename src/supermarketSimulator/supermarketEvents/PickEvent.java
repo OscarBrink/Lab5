@@ -35,6 +35,15 @@ public class PickEvent extends Event {
 		}
 	}
 
+	@Override
+	public String[] getPrintInfo() {
+		return new String[]{
+				String.format("%.2f", time),
+				getEventName(),
+				String.valueOf(c.getCustomerNumber())
+		};
+	}
+
 	public double getQueueTime() {
 		return c.getQueueTime();
 	}
