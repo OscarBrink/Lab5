@@ -31,10 +31,10 @@ public class SupermarketView extends View {
 			System.out.printf("%-10s %-20s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s\n", "Tid", "Händelse", "Kund", "?", "Led","LedT", "I", "$", ":-(", "Köat", "KöT","Köar", "[Kassakö]");
 			System.out.printf("%-10s %-10s\n", info[0], info[1]);
 		}
-		if(state.getQueueList().getFirst().getEventName() == "CloseEvent"){
+		else if(state.getQueueList().getFirst().getEventName() == "CloseEvent"){
 			System.out.printf("%-10s %-20s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s\n", info[0], info[1], "---", info[3], info[4], info[5], info[6], info[7], info[8], info[9], info[10],info[11],info[12]);
 		}
-		if(state.getQueueList().getFirst().getEventName() == "StopSimEvent"){
+		else if(state.getQueueList().getFirst().getEventName() == "StopSimEvent"){
 			System.out.printf("%-10s %-10s\n", info[0], info[1]);
 			printResult();
 		}

@@ -22,10 +22,10 @@ public class TimeState {/*
 	static UniformRandomStream uni = new UniformRandomStream(tempLower, tempUpper, tempSeed);
 	*/
 
-	public TimeState(long seed, double lambda, double pickLower, double pickUpper, double payLower, double payUpper) {
+	public TimeState(long seed, double lambda, double pickMin, double pickMax, double payMin, double payMax) {
 		arrivalTimeGenerator = new ExponentialRandomStream(lambda, seed);
-		pickTimeGenerator = new UniformRandomStream(pickLower, pickUpper, seed);
-		payTimeGenerator = new UniformRandomStream(payLower, payUpper);
+		pickTimeGenerator = new UniformRandomStream(pickMin, pickMax, seed);
+		payTimeGenerator = new UniformRandomStream(payMin, payMax);
 	}
 
 	public double arrivalTime() {
