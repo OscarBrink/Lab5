@@ -18,6 +18,7 @@ public class SupermarketState extends State {
 	private CustomerFactory customerFactory = new CustomerFactory();
 	private boolean isOpen = true;
 	private ArrayList<Customer> cashierQueue = new ArrayList<Customer>();
+	private TimeState timeState;
 
 	public SupermarketState(EventQueue queueList) {
 		this.queueList = queueList;
@@ -281,6 +282,14 @@ public class SupermarketState extends State {
 
 	public void setSeed(long seed) {
 		this.seed = seed;
+	}
+
+	public void initTimeState() {
+		this.timeState = new TimeState(seed, lambda, pickMin, pickMax, payMin, payMax);
+	}
+
+	public TimeState getTimeState() {
+		return timeState;
 	}
 
 }

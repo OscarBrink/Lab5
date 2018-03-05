@@ -21,7 +21,7 @@ public class StartEvent extends Event {
 
 	@Override
 	public void effect() {
-		new ArriveEvent(TimeState.arrivalTime(), state, eventQueue);
+		new ArriveEvent(state.getTimeState().arrivalTime(), state, eventQueue);
 
 	}
 

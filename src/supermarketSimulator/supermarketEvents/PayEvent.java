@@ -38,7 +38,7 @@ public class PayEvent extends Event {
 		state.decreaseCurrCustomers();
 		state.finishedCustomer();
 		if (state.getCashierQueSize() > 0) {
-			new PayEvent(TimeState.paymentTime(), state, que, state.getNextCustomer()); // Next customer pays.
+			new PayEvent(state.getTimeState().paymentTime(), state, que, state.getNextCustomer()); // Next customer pays.
 		} else {
 			state.increaseFreeCashiers(); // Noone in que, Free cashier.
 		}
