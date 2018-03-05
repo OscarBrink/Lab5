@@ -17,6 +17,12 @@ public class RunSimulator {
 		state = new SupermarketState(eventQueue);
 		state.setMaxCustomers(maxAmountCustomers);
 		state.setOpenCashiers(openCashiers);
+		state.setLambda(lambda);
+		state.setPickMin(PickMin);
+		state.setPickMax(PickMax);
+		state.setPayMin(payMin);
+		state.setPayMax(payMax);
+		state.setSeed(seed);
 
 		eventQueue.addEvent(new StartEvent(0, state, eventQueue));
 		eventQueue.addEvent(new StopSimEvent(stopTime, state));

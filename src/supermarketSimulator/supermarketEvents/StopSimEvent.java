@@ -21,4 +21,10 @@ public class StopSimEvent extends Event {
 		state.stopSim();
 	}
 
+
+	public int getCustomerNumber() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

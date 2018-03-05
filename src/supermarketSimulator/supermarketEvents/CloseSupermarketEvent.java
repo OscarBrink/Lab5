@@ -17,7 +17,7 @@ public class CloseSupermarketEvent extends Event {
 
 	@Override
 	public String getEventName() {
-		return "CloseSupermarketEvent";
+		return "CloseEvent";
 	}
 
 	/**
@@ -27,6 +27,11 @@ public class CloseSupermarketEvent extends Event {
 	public void effect() {
 		state.closeStore();
 
+	}
+
+	public int getCustomerNumber() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
