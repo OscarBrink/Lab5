@@ -9,7 +9,7 @@ public class ArriveEvent extends Event {
 	private Customer c;
 
 	public ArriveEvent(double time, SupermarketState state, EventQueue que) {
-		c = CustomerFactory.newCustomer(); // Creates customer.
+		c = state.newCustomer(); // Creates customer.
 		super.time = time;
 		this.state = state;
 		this.que = que;

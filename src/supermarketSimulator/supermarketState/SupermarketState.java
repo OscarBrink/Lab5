@@ -15,6 +15,7 @@ public class SupermarketState extends State {
 	private int nrOfFreeCashiers = openCashiers;
 	private double currentTime;
 	private EventQueue queueList;
+	private CustomerFactory customerFactory = new CustomerFactory();
 	private boolean isOpen = true;
 	private ArrayList<Customer> cashierQueue = new ArrayList<Customer>();
 
@@ -83,6 +84,13 @@ public class SupermarketState extends State {
 		result[6] = (queTot); // Max antal kunder som köat
 		result[7] = (this.queueTime); // Summan av tid kunder köat.
 		return result;
+	}
+
+	/**
+	 * Creates a customer and returns it.
+	 */
+	public Customer newCustomer() {
+		return customerFactory.newCustomer();
 	}
 
 	public int queueListSize() {
