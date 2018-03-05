@@ -158,6 +158,8 @@ public class SupermarketState extends State {
 		return currentCustomers < maxCustomers;
 	}
 
+
+
 	/**
 	 * Increases nr of customers missed. Called from arrive if the customer cannot
 	 * enter.
@@ -312,5 +314,16 @@ public class SupermarketState extends State {
 	public TimeState getTimeState() {
 		return timeState;
 	}
+
+	
+	/**
+	 * Returns the total amount of customers visiting the store.
+	 * @return
+	 */
+	public int getTotalCustomers() {
+		return totalCustomers;
+	}
+
+
 
 }
