@@ -2,9 +2,13 @@ package supermarketSimulator.supermarketState;
 
 public class CustomerFactory {
 
-	static int amount = 0;
+	private int amount = 0;
 
-	public static Customer newCustomer() {
+	public CustomerFactory() {
+
+	}
+
+	public Customer newCustomer() {
 		return new Customer(++amount);
 	}
 }

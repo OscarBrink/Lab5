@@ -15,6 +15,7 @@ public class PickEvent extends Event {
 		this.state = state;
 		this.que = que;
 		que.addEvent(this);// Adds itself to the EventQueue
+		
 	}
 
 	/**
@@ -24,6 +25,7 @@ public class PickEvent extends Event {
 	 */
 	@Override
 	public void effect() {
+		state.increaseIdleTime();
 		if (state.getFreeCashiers() > 0) {
 			// If there are free cashiers. Pay.
 			new PayEvent(TimeState.paymentTime(), state, que, c);
@@ -47,6 +49,7 @@ public class PickEvent extends Event {
 	public double getQueueTime() {
 		return c.getQueueTime();
 	}
+	
 	
 	public int getCustomerNumber() {
 		return c.getCustomerNumber();

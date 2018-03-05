@@ -2,7 +2,6 @@ package supermarketSimulator.supermarketEvents;
 
 import genericSimulator.events.*;
 import supermarketSimulator.supermarketState.*;
-import supermarketSimulator.supermarketView.SupermarketView;
 
 public class ArriveEvent extends Event {
 	private SupermarketState state;
@@ -10,7 +9,7 @@ public class ArriveEvent extends Event {
 	private Customer c;
 
 	public ArriveEvent(double time, SupermarketState state, EventQueue que) {
-		c = CustomerFactory.newCustomer(); // Creates customer.
+		c = state.newCustomer(); // Creates customer.
 		super.time = time;
 		this.state = state;
 		this.que = que;
@@ -31,6 +30,7 @@ public class ArriveEvent extends Event {
 	@Override
 	public void effect() {
 		state.increaseTotCustomers();
+		state.increaseIdleTime();
 		if (state.Open()) {
 			if (state.canEnter()) {
 				state.increaseCurrCustomers();
@@ -54,6 +54,8 @@ public class ArriveEvent extends Event {
 				String.valueOf(c.getCustomerNumber())
 		};
 	}
+
+
 
 	public int getCustomerNumber() {
 		return c.getCustomerNumber();

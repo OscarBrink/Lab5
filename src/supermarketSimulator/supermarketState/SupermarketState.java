@@ -8,13 +8,14 @@ import genericSimulator.state.State;
 
 public class SupermarketState extends State {
 
-	private int finishedCustomers, currentCustomers, customersMissed, maxCustomers,totalCustomers;
+	private int finishedCustomers, currentCustomers, customersMissed, maxCustomers, totalCustomers;
 	private double queueTime = 0.0, idleCashierTime;
 	private int openCashiers, queTot = 0;
 	private int nrOfFreeCashiers = openCashiers;
-	private double currentTime, lambda,pickMin, pickMax, payMin, payMax;
+	private double currentTime, lambda, pickMin, pickMax, payMin, payMax;
 	private long seed;
 	private EventQueue queueList;
+	private CustomerFactory customerFactory = new CustomerFactory();
 	private boolean isOpen = true;
 	private ArrayList<Customer> cashierQueue = new ArrayList<Customer>();
 
@@ -28,6 +29,7 @@ public class SupermarketState extends State {
 
 	/**
 	 * Puts all the variables for each event into an array.
+	 *
 	 * @return info Array with all the variables.
 	 */
 	public String[] supermarketInfo() {
@@ -47,13 +49,14 @@ public class SupermarketState extends State {
 		info[8] = String.valueOf(customersMissed); // Kunder som inte kom in
 		info[9] = String.valueOf(queTot); // Totala antalet kunder som köat
 		info[10] = String.valueOf(df.format(queueTime)); // Summan tid kunder har köat
-		info[11] = String.valueOf(getCashierQueSize()); //Hur lång kassakön är
-		info[12] = toStringCashQue(); //Skriver ut kassakön
+		info[11] = String.valueOf(getCashierQueSize()); // Hur lång kassakön är
+		info[12] = toStringCashQue(); // Skriver ut kassakön
 		return info;
 	}
 
 	/**
 	 * Puts the start parameters for the simulator into an array.
+	 *
 	 * @return parameters Array of the simulators parameters.
 	 */
 	public double[] supermarketParameters() {
@@ -71,6 +74,7 @@ public class SupermarketState extends State {
 
 	/**
 	 * Puts the result of the simulation into an array.
+	 *
 	 * @return result Array of the result from the simulation.
 	 */
 	public double[] supermarketResult() {
@@ -87,9 +91,22 @@ public class SupermarketState extends State {
 	}
 
 	/**
+	 * Creates a customer and returns it.
+	 */
+	public Customer newCustomer() {
+		return customerFactory.newCustomer();
+	}
+
+	public int queueListSize() {
+		return queueList.size();
+	}
+
+	/**
 	 * Adds a customer to the cashierqueue and increases total of customers that has
 	 * had to queue.
-	 * @param c The customer to be added.
+	 *
+	 * @param c
+	 *            The customer to be added.
 	 */
 	public void addCustomer(Customer c) {
 		this.cashierQueue.add(c);
@@ -125,6 +142,7 @@ public class SupermarketState extends State {
 
 	/**
 	 * Checks if the store is full.
+	 *
 	 * @return Ö if store isn't full, otherwise returns S.
 	 */
 	private String isOpen() {
@@ -161,7 +179,6 @@ public class SupermarketState extends State {
 		this.currentCustomers--;
 	}
 
-	
 	/**
 	 * Increases finished customers.
 	 */
@@ -188,6 +205,12 @@ public class SupermarketState extends State {
 	 */
 	public int getFreeCashiers() {
 		return this.nrOfFreeCashiers;
+	}
+
+	public void increaseIdleTime() {
+		if (nrOfFreeCashiers > 0) {
+			idleCashierTime += getCurrTime();
+		}
 	}
 
 	/**
@@ -220,11 +243,11 @@ public class SupermarketState extends State {
 	public void decreaseFreeCashiers() {
 		this.nrOfFreeCashiers--;
 	}
-	
+
 	/**
 	 * Increases the total amount of customers that arrives at the store.
 	 */
-	public void increaseTotCustomers(){
+	public void increaseTotCustomers() {
 		totalCustomers++;
 	}
 
@@ -237,7 +260,7 @@ public class SupermarketState extends State {
 	}
 
 	public void setLambda(double lambda) {
-		this.lambda = lambda;	
+		this.lambda = lambda;
 	}
 
 	public void setPickMin(double pickMin) {
@@ -259,8 +282,5 @@ public class SupermarketState extends State {
 	public void setSeed(long seed) {
 		this.seed = seed;
 	}
-	
-	
-	
-	
+
 }
