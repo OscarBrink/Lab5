@@ -9,7 +9,7 @@ import genericSimulator.state.State;
 public class SupermarketState extends State {
 
 	private int finishedCustomers, currentCustomers, customersMissed, maxCustomers, totalCustomers;
-	private double queueTime = 0.0, idleCashierTime;
+	private double queueTime = 0.0, idleCashierTime, previousTime;
 	private int openCashiers, queTot = 0;
 	private int nrOfFreeCashiers;
 	private double currentTime, lambda, pickMin, pickMax, payMin, payMax;
@@ -147,7 +147,8 @@ public class SupermarketState extends State {
 	 * @return Ö if store isn't full, otherwise returns S.
 	 */
 	private String isOpen() {
-		return (currentCustomers < maxCustomers) ? "Ö" : "S";
+		return (isOpen) ? "Ö" : "S";
+		//return (currentCustomers < maxCustomers) ? "Ö" : "S";
 	}
 
 	/**
@@ -229,7 +230,7 @@ public class SupermarketState extends State {
 	/**
 	 * Increases the total quetime for the store.
 	 * 
-	 * @param time
+	 * *@param time
 	 *            The time a specific customer has been in que.
 	 */
 	public void increaseQueTime() {

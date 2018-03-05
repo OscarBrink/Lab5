@@ -8,11 +8,11 @@ public class CloseSupermarketEvent extends Event {
 	private SupermarketState state;
 	private EventQueue que;
 
-	public CloseSupermarketEvent(int time, SupermarketState state, EventQueue que) {
+	public CloseSupermarketEvent(double time, SupermarketState state, EventQueue que) {
 		super.time = time;
 		this.state = state;
 		this.que = que;
-		que.addEvent(this); // Adds itself to the EventQueue
+		// que.addEvent(this); // Adds itself to the EventQueue
 	}
 
 	@Override
