@@ -28,15 +28,15 @@ public class TimeState {/*
 		payTimeGenerator = new UniformRandomStream(payLower, payUpper);
 	}
 
-	public double arrivalTime() {
-		return arrivalTimeGenerator.next();
+	public double arrivalTime(double currentTime) {
+		return currentTime + arrivalTimeGenerator.next();
 	}
 
-	public double pickTime() {
-		return pickTimeGenerator.next();
+	public double pickTime(double currentTime) {
+		return currentTime + pickTimeGenerator.next();
 	}
 
-	public double paymentTime() {
-		return payTimeGenerator.next();
+	public double paymentTime(double currentTime) {
+		return currentTime + payTimeGenerator.next();
 	}
 }

@@ -34,13 +34,13 @@ public class ArriveEvent extends Event {
 		if (state.Open()) {
 			if (state.canEnter()) {
 				state.increaseCurrCustomers();
-				new PickEvent(state.getTimeState().pickTime(), state, que, c);// Creates a pickevent for the customer.
-				new ArriveEvent(state.getTimeState().arrivalTime(), state, que); // Creates the next arrival.
+				new PickEvent(state.getTimeState().pickTime(time), state, que, c);// Creates a pickevent for the customer.
+				new ArriveEvent(state.getTimeState().arrivalTime(time), state, que); // Creates the next arrival.
 			} else {
 				state.missedCustomer(); // Missed a customer
 			}
 		} else {
-			new ArriveEvent(state.getTimeState().arrivalTime(), state, que); // Keeps generating customers even if store is
+			new ArriveEvent(state.getTimeState().arrivalTime(time), state, que); // Keeps generating customers even if store is
 																	// closed??
 		}
 

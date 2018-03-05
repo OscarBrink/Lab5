@@ -28,7 +28,7 @@ public class PickEvent extends Event {
 		state.increaseIdleTime();
 		if (state.getFreeCashiers() > 0) {
 			// If there are free cashiers. Pay.
-			new PayEvent(state.getTimeState().paymentTime(), state, que, c);
+			new PayEvent(state.getTimeState().paymentTime(time), state, que, c);
 			state.decreaseFreeCashiers(); // One less free cashier.
 		} else {
 			state.addCustomer(c); // Adding customer to que as no cashiers are available.
