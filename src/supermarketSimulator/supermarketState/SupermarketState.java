@@ -142,13 +142,12 @@ public class SupermarketState extends State {
 	}
 
 	/**
-	 * Checks if the store is full.
+	 * Checks if the store is full and open or closed.
 	 *
-	 * @return Ö if store isn't full, otherwise returns S.
+	 * @return Ö if store isn't full and open, otherwise returns S.
 	 */
 	private String isOpen() {
-		return (isOpen) ? "Ö" : "S";
-		//return (currentCustomers < maxCustomers) ? "Ö" : "S";
+		return (currentCustomers < maxCustomers && isOpen) ? "Ö" : "S";
 	}
 
 	/**
