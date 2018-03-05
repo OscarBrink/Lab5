@@ -232,6 +232,10 @@ public class SupermarketState extends State {
 	public double getCurrTime() {
 		return this.currentTime;
 	}
+	
+	public int getMaxOpenCashiers() {
+		return openCashiers;
+	}
 
 	/**
 	 * Increases the total quetime for the store.
