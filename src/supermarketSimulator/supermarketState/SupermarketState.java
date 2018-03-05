@@ -210,8 +210,13 @@ public class SupermarketState extends State {
 
 	public void increaseIdleTime() {
 		if (nrOfFreeCashiers > 0) {
-			idleCashierTime += getCurrTime();
+			idleCashierTime += this.currentTime - this.previousTime;
 		}
+	}
+
+	public void setCurrTime(double time){
+		this.previousTime = this.currentTime;
+		this.currentTime = time;
 	}
 
 	/**
@@ -227,8 +232,10 @@ public class SupermarketState extends State {
 	 * @param time
 	 *            The time a specific customer has been in que.
 	 */
-	public void increaseQueTime(double time) {
-		this.queueTime += time;
+	public void increaseQueTime() {
+		if(getCashierQueSize() > 0){
+			this.queueTime += this.currentTime - this.previousTime;
+		}
 	}
 
 	/**
