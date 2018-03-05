@@ -23,7 +23,7 @@ public class PayEvent extends Event {
 	public String getEventName() {
 		return "PayEvent";
 	}
-	
+
 	public int getCustomerNumber() {
 		return c.getCustomerNumber();
 	}

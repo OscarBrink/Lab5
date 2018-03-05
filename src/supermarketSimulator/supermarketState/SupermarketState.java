@@ -11,7 +11,7 @@ public class SupermarketState extends State {
 	private int finishedCustomers, currentCustomers, customersMissed, maxCustomers, totalCustomers;
 	private double queueTime = 0.0, idleCashierTime;
 	private int openCashiers, queTot = 0;
-	private int nrOfFreeCashiers = openCashiers;
+	private int nrOfFreeCashiers;
 	private double currentTime, lambda, pickMin, pickMax, payMin, payMax;
 	private long seed;
 	private EventQueue queueList;
@@ -258,6 +258,7 @@ public class SupermarketState extends State {
 
 	public void setOpenCashiers(int openCashiers) {
 		this.openCashiers = openCashiers;
+		this.nrOfFreeCashiers = openCashiers;
 	}
 
 	public void setLambda(double lambda) {
