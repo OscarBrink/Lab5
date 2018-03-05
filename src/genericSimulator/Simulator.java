@@ -27,4 +27,11 @@ public class Simulator {
 			eventQueue.removeFirst();
 		}
 	}
+	
+	public void runWithNoPrint() {
+		while (!state.getEmergencyBreak()) {
+			eventQueue.getFirst().effect();
+			eventQueue.removeFirst();
+		}
+	}
 }

@@ -247,6 +247,10 @@ public class SupermarketState extends State {
 	public void increaseTotCustomers() {
 		totalCustomers++;
 	}
+	
+	public int getNumberOfMissedCustomers() {
+		return customersMissed;
+	}
 
 	public void setMaxCustomers(int maxCustomers) {
 		this.maxCustomers = maxCustomers;

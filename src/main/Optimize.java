@@ -1,59 +1,72 @@
 package main;
 
+import genericSimulator.*;
+import genericSimulator.events.EventQueue;
+import supermarketSimulator.supermarketEvents.StartEvent;
+import supermarketSimulator.supermarketEvents.StopSimEvent;
 import supermarketSimulator.supermarketState.SupermarketState;
+import supermarketSimulator.supermarketView.SupermarketView;
 
 public class Optimize {
 	
-	static double stopTime;
-	static int maxAmountCustomers;
-	static double lambda;
-	static double PickMin;
-	static double PickMax;
-	static double payMin;
-	static double payMax;
-	static long seed;
-	static int openCashiers;
-	static int numberOfOptimizations= 10;
-	boolean isRunning;
 	SupermarketState state;
-	
+	Simulator simulator;
+	boolean isRunning = false;
+	int numberOfOptimizations = 10;
+	int decreaseLimit = 10;
 
 	public Optimize(double stopTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax, double payMin, double payMax, long seed, int openCashiers) {
-			
+
+		EventQueue eventQueue = new EventQueue();
+		state = new SupermarketState(eventQueue);
+		state.setMaxCustomers(maxAmountCustomers);
+		state.setOpenCashiers(openCashiers);
+		state.setLambda(lambda);
+		state.setPickMin(PickMin);
+		state.setPickMax(PickMax);
+		state.setPayMin(payMin);
+		state.setPayMax(payMax);
+		state.setSeed(seed);
+
+		eventQueue.addEvent(new StartEvent(0, state, eventQueue));
+		eventQueue.addEvent(new StopSimEvent(stopTime, state));
+
+		SupermarketView view = new SupermarketView(state);
+
+		simulator = new Simulator(eventQueue, state, view);
+		
+		System.out.println(state.getEmergencyBreak());
+		//runOpti(openCashiers);
+		System.out.println(state.getEmergencyBreak());
+		
 		int i = 0;
 		while(i < numberOfOptimizations) {
-			if (isRunning) {
-			} else {
-				openCashiers = optimizeCashiers();
-				run(stopTime, maxAmountCustomers, lambda, PickMin, PickMax, payMin, payMax, seed, openCashiers);
+			//if(isRunning) {
+			//} else {
+				runOpti(openCashiers);
+				System.out.println(i);
 				i++;
-			}
+			//}
 		}
-	}
-	
-	void run(double stopTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax, double payMin, double payMax, long seed, int openCashiers) {
-		RunSimulator runSim = new RunSimulator(
-			stopTime,
-			maxAmountCustomers,
-			lambda,
-			PickMin,
-			PickMax,
-			payMin,
-			payMax,
-			seed,
-			openCashiers
-			
-	);	isRunning = true;
-		while(!runSim.getState().getEmergencyBreak()) {}
-		isRunning = false;
-	}
-
-		static int optimizeCashiers() {
-			return 3;
 		
 	}
-}
 	
+	void runOpti(int openCashiers) {
+		isRunning = true;
+		simulator.runWithNoPrint();
+		while(true) {
+			if(state.getEmergencyBreak()) {
+				break;
+			}
+		}
+		System.out.println(state.getNumberOfMissedCustomers());
+		isRunning = false;
+		return;
+	}
 	
-	
+	void optimizeCashiers() {
+		int numberOfRunsWithoutDecreasing = 0;
+		while(numberOfRunsWithoutDecreasing)
+	}
 
+}

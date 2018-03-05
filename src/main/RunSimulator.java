@@ -34,8 +34,6 @@ public class RunSimulator {
 		simulator.run();
 	}
 	
-	SupermarketState getState() {
-		return this.state;
-	}
+	
 
 }
