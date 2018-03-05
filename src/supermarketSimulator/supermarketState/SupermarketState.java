@@ -9,10 +9,10 @@ import genericSimulator.state.State;
 public class SupermarketState extends State {
 
 	private int finishedCustomers, currentCustomers, customersMissed, maxCustomers, totalCustomers;
-	private double queueTime = 0.0, idleCashierTime;
+	private double queueTime = 0.0, idleCashierTime, previousTime;
 	private int openCashiers, queTot = 0;
-	private int nrOfFreeCashiers = 2;
-	private double currentTime, previousTime, lambda, pickMin, pickMax, payMin, payMax;
+	private int nrOfFreeCashiers;
+	private double currentTime, lambda, pickMin, pickMax, payMin, payMax;
 	private long seed;
 	private EventQueue queueList;
 	private CustomerFactory customerFactory = new CustomerFactory();
@@ -147,7 +147,8 @@ public class SupermarketState extends State {
 	 * @return Ö if store isn't full, otherwise returns S.
 	 */
 	private String isOpen() {
-		return (currentCustomers < maxCustomers) ? "Ö" : "S";
+		return (isOpen) ? "Ö" : "S";
+		//return (currentCustomers < maxCustomers) ? "Ö" : "S";
 	}
 
 	/**
@@ -270,6 +271,7 @@ public class SupermarketState extends State {
 
 	public void setOpenCashiers(int openCashiers) {
 		this.openCashiers = openCashiers;
+		this.nrOfFreeCashiers = openCashiers;
 	}
 
 	public void setLambda(double lambda) {
