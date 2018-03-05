@@ -29,24 +29,36 @@ public class ArriveEvent extends Event {
 	 */
 	@Override
 	public void effect() {
+		state.setCurrTime(time);
 		state.increaseTotCustomers();
 		state.increaseIdleTime();
+		state.increaseQueTime();
 		if (state.Open()) {
 			if (state.canEnter()) {
 				state.increaseCurrCustomers();
-				new PickEvent(TimeState.pickTime(), state, que, c);// Creates a pickevent for the customer.
-				new ArriveEvent(TimeState.arrivalTime(), state, que); // Creates the next arrival.
+				new PickEvent(state.getTimeState().pickTime(time), state, que, c);// Creates a pickevent for the customer.
+				new ArriveEvent(state.getTimeState().arrivalTime(time), state, que); // Creates the next arrival.
 			} else {
 				state.missedCustomer(); // Missed a customer
 			}
 		} else {
-			new ArriveEvent(TimeState.arrivalTime(), state, que); // Keeps generating customers even if store is
+			new ArriveEvent(state.getTimeState().arrivalTime(time), state, que); // Keeps generating customers even if store is
 																	// closed??
 		}
 
 	}
-	
-	
+
+	@Override
+	public String[] getPrintInfo() {
+		return new String[]{
+				String.format("%.2f", time),
+				getEventName(),
+				String.valueOf(c.getCustomerNumber())
+		};
+	}
+
+
+
 	public int getCustomerNumber() {
 		return c.getCustomerNumber();
 	}

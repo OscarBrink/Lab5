@@ -6,7 +6,7 @@ import supermarketSimulator.supermarketState.SupermarketState;
 import genericSimulator.view.View;
 
 public class SupermarketView extends View {
-	
+
 	private SupermarketState state;
 	
 	public SupermarketView(SupermarketState state){
@@ -31,10 +31,10 @@ public class SupermarketView extends View {
 			System.out.printf("%-10s %-20s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s\n", "Tid", "Händelse", "Kund", "?", "Led","LedT", "I", "$", ":-(", "Köat", "KöT","Köar", "[Kassakö]");
 			System.out.printf("%-10s %-10s\n", info[0], info[1]);
 		}
-		if(state.getQueueList().getFirst().getEventName() == "CloseEvent"){
+		else if(state.getQueueList().getFirst().getEventName() == "CloseEvent"){
 			System.out.printf("%-10s %-20s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s\n", info[0], info[1], "---", info[3], info[4], info[5], info[6], info[7], info[8], info[9], info[10],info[11],info[12]);
 		}
-		if(state.getQueueList().getFirst().getEventName() == "StopSimEvent"){
+		else if(state.getQueueList().getFirst().getEventName() == "StopSimEvent"){
 			System.out.printf("%-10s %-10s\n", info[0], info[1]);
 			printResult();
 		}
@@ -59,7 +59,7 @@ public class SupermarketView extends View {
 		double[] res = state.supermarketResult();
 		System.out.println("\nRESULTAT\n==========\n");
 		System.out.println("1) Av " + (int)res[0] + " kunder handlade " + (int)res[1] + " medan " + (int)res[2] + " missades.\n");
-		System.out.println("2) Total tid " + (int)res[3] + " kassor varit lediga: " + df.format(res[4]) + " te.\n   Genomsnittlig ledig kassatid: " + df.format(res[3]/res[4]) + " te.\n");
+		System.out.println("2) Total tid " + (int)res[3] + " kassor varit lediga: " + df.format(res[4]) + " te.\n   Genomsnittlig ledig kassatid: " + df.format(res[4]/res[3]) + " te.\n");
 		System.out.println("3) Total tid " + (int)res[6] + " kunder tvingats köa: " + df.format(res[7]) + " te.\n   Genomsnittlig kötid: " + df.format(res[7]/res[6]) + " te.\n");
 	}
 }

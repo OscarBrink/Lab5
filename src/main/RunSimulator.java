@@ -2,6 +2,7 @@ package main;
 
 import genericSimulator.*;
 import genericSimulator.events.EventQueue;
+import supermarketSimulator.supermarketEvents.CloseSupermarketEvent;
 import supermarketSimulator.supermarketEvents.StartEvent;
 import supermarketSimulator.supermarketEvents.StopSimEvent;
 import supermarketSimulator.supermarketState.SupermarketState;
@@ -24,7 +25,10 @@ public class RunSimulator {
 		state.setPayMax(payMax);
 		state.setSeed(seed);
 
+		state.initTimeState();
+
 		eventQueue.addEvent(new StartEvent(0, state, eventQueue));
+		eventQueue.addEvent(new CloseSupermarketEvent(10.0, state, eventQueue));
 		eventQueue.addEvent(new StopSimEvent(stopTime, state));
 
 		SupermarketView view = new SupermarketView(state);

@@ -21,13 +21,17 @@ public class StartEvent extends Event {
 
 	@Override
 	public void effect() {
-		new ArriveEvent(TimeState.arrivalTime(), state, eventQueue);
-
+		state.setCurrTime(time);
+		new ArriveEvent(state.getTimeState().arrivalTime(time), state, eventQueue);
 	}
 
-	public int getCustomerNumber() {
-		// TODO Auto-generated method stub
-		return 0;
+	@Override
+	public String[] getPrintInfo() {
+		return new String[]{
+				String.format("%.2f", time),
+				getEventName(),
+				""
+		};
 	}
 
 }

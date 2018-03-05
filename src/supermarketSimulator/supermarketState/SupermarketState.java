@@ -9,15 +9,16 @@ import genericSimulator.state.State;
 public class SupermarketState extends State {
 
 	private int finishedCustomers, currentCustomers, customersMissed, maxCustomers, totalCustomers;
-	private double queueTime = 0.0, idleCashierTime;
+	private double queueTime = 0.0, idleCashierTime, previousTime;
 	private int openCashiers, queTot = 0;
-	private int nrOfFreeCashiers = openCashiers;
+	private int nrOfFreeCashiers;
 	private double currentTime, lambda, pickMin, pickMax, payMin, payMax;
 	private long seed;
 	private EventQueue queueList;
 	private CustomerFactory customerFactory = new CustomerFactory();
 	private boolean isOpen = true;
 	private ArrayList<Customer> cashierQueue = new ArrayList<Customer>();
+	private TimeState timeState;
 
 	public SupermarketState(EventQueue queueList) {
 		this.queueList = queueList;
@@ -29,15 +30,18 @@ public class SupermarketState extends State {
 
 	/**
 	 * Puts all the variables for each event into an array.
-	 * 
+	 *
 	 * @return info Array with all the variables.
 	 */
 	public String[] supermarketInfo() {
 		DecimalFormat df = new DecimalFormat("#0.00");
 		String[] info = new String[13];
-		info[0] = String.valueOf(df.format(queueList.getFirst().getTime())); // Händelsetidpunkt
-		info[1] = queueList.getFirst().getEventName(); // Händelsenamn
-		info[2] = String.valueOf(queueList.getFirst().getCustomerNumber()); // Kundnr
+
+		String[] eventInfo = queueList.getFirst().getPrintInfo();
+		info[0] = eventInfo[0]; // Händelsetidpunkt
+		info[1] = eventInfo[1]; // Händelsenamn
+		info[2] = eventInfo[2]; // Kundnr
+
 		info[3] = isOpen(); // Affären öppen eller stängd
 		info[4] = String.valueOf(nrOfFreeCashiers); // Lediga kassor
 		info[5] = String.valueOf(df.format(idleCashierTime)); // Tid som kassor varit lediga
@@ -53,7 +57,7 @@ public class SupermarketState extends State {
 
 	/**
 	 * Puts the start parameters for the simulator into an array.
-	 * 
+	 *
 	 * @return parameters Array of the simulators parameters.
 	 */
 	public double[] supermarketParameters() {
@@ -71,7 +75,7 @@ public class SupermarketState extends State {
 
 	/**
 	 * Puts the result of the simulation into an array.
-	 * 
+	 *
 	 * @return result Array of the result from the simulation.
 	 */
 	public double[] supermarketResult() {
@@ -101,7 +105,7 @@ public class SupermarketState extends State {
 	/**
 	 * Adds a customer to the cashierqueue and increases total of customers that has
 	 * had to queue.
-	 * 
+	 *
 	 * @param c
 	 *            The customer to be added.
 	 */
@@ -139,11 +143,12 @@ public class SupermarketState extends State {
 
 	/**
 	 * Checks if the store is full.
-	 * 
+	 *
 	 * @return Ö if store isn't full, otherwise returns S.
 	 */
 	private String isOpen() {
-		return (currentCustomers < maxCustomers) ? "Ö" : "S";
+		return (isOpen) ? "Ö" : "S";
+		//return (currentCustomers < maxCustomers) ? "Ö" : "S";
 	}
 
 	/**
@@ -204,10 +209,22 @@ public class SupermarketState extends State {
 		return this.nrOfFreeCashiers;
 	}
 
+	/**
+	 * Increases the total time cashiers has been idle during the simulation.
+	 */
 	public void increaseIdleTime() {
 		if (nrOfFreeCashiers > 0) {
-			idleCashierTime += getCurrTime();
+			idleCashierTime += (this.currentTime - this.previousTime);
 		}
+	}
+	
+	/**
+	 * Updates the currentTime and saves the last currentTime in a previousTime variable.
+	 * @param time the time when the method is called.
+	 */
+	public void setCurrTime(double time){
+		this.previousTime = this.currentTime;
+		this.currentTime = time;
 	}
 
 	/**
@@ -220,11 +237,11 @@ public class SupermarketState extends State {
 	/**
 	 * Increases the total quetime for the store.
 	 * 
-	 * @param time
-	 *            The time a specific customer has been in que.
 	 */
-	public void increaseQueTime(double time) {
-		this.queueTime += time;
+	public void increaseQueTime() {
+		if(getCashierQueSize() > 0){
+			this.queueTime += this.currentTime - this.previousTime;
+		}
 	}
 
 	/**
@@ -258,6 +275,7 @@ public class SupermarketState extends State {
 
 	public void setOpenCashiers(int openCashiers) {
 		this.openCashiers = openCashiers;
+		this.nrOfFreeCashiers = openCashiers;
 	}
 
 	public void setLambda(double lambda) {
@@ -282,6 +300,14 @@ public class SupermarketState extends State {
 
 	public void setSeed(long seed) {
 		this.seed = seed;
+	}
+
+	public void initTimeState() {
+		this.timeState = new TimeState(seed, lambda, pickMin, pickMax, payMin, payMax);
+	}
+
+	public TimeState getTimeState() {
+		return timeState;
 	}
 
 }
