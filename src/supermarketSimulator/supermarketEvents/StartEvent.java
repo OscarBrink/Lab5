@@ -21,6 +21,7 @@ public class StartEvent extends Event {
 
 	@Override
 	public void effect() {
+		state.setCurrTime(time);
 		new ArriveEvent(TimeState.arrivalTime(), state, eventQueue);
 
 	}

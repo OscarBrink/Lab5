@@ -14,7 +14,7 @@ public class PayEvent extends Event {
 		super.time = time;
 		this.state = state;
 		c.setQueueTime(state.getCurrTime());// Customer can pay, quetime is set.
-		state.increaseQueTime(c.getQueueTime()); // This customers quetime is added to total.
+//		state.increaseQueTime(c.getQueueTime()); // This customers quetime is added to total.
 		que.addEvent(this); // Adds itself to the EventQueue
 
 	}
@@ -34,9 +34,11 @@ public class PayEvent extends Event {
 	 */
 	@Override
 	public void effect() {
+		state.setCurrTime(time);
 		state.increaseIdleTime();
 		state.decreaseCurrCustomers();
 		state.finishedCustomer();
+		state.increaseQueTime();
 		if (state.getCashierQueSize() > 0) {
 			new PayEvent(TimeState.paymentTime(), state, que, state.getNextCustomer()); // Next customer pays.
 		} else {

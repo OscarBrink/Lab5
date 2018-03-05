@@ -11,8 +11,8 @@ public class SupermarketState extends State {
 	private int finishedCustomers, currentCustomers, customersMissed, maxCustomers, totalCustomers;
 	private double queueTime = 0.0, idleCashierTime;
 	private int openCashiers, queTot = 0;
-	private int nrOfFreeCashiers = openCashiers;
-	private double currentTime, lambda, pickMin, pickMax, payMin, payMax;
+	private int nrOfFreeCashiers = 2;
+	private double currentTime, previousTime, lambda, pickMin, pickMax, payMin, payMax;
 	private long seed;
 	private EventQueue queueList;
 	private CustomerFactory customerFactory = new CustomerFactory();
@@ -206,8 +206,13 @@ public class SupermarketState extends State {
 
 	public void increaseIdleTime() {
 		if (nrOfFreeCashiers > 0) {
-			idleCashierTime += getCurrTime();
+			idleCashierTime += this.currentTime - this.previousTime;
 		}
+	}
+	
+	public void setCurrTime(double time){
+		this.previousTime = this.currentTime;
+		this.currentTime = time;
 	}
 
 	/**
@@ -223,8 +228,10 @@ public class SupermarketState extends State {
 	 * @param time
 	 *            The time a specific customer has been in que.
 	 */
-	public void increaseQueTime(double time) {
-		this.queueTime += time;
+	public void increaseQueTime() {
+		if(getCashierQueSize() > 0){
+			this.queueTime += this.currentTime - this.previousTime;
+		}
 	}
 
 	/**

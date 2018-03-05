@@ -29,6 +29,7 @@ public class ArriveEvent extends Event {
 	 */
 	@Override
 	public void effect() {
+		state.setCurrTime(time);
 		state.increaseTotCustomers();
 		state.increaseIdleTime();
 		if (state.Open()) {

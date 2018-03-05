@@ -25,14 +25,16 @@ public class PickEvent extends Event {
 	 */
 	@Override
 	public void effect() {
+		state.setCurrTime(time);
 		state.increaseIdleTime();
+		state.increaseQueTime();
 		if (state.getFreeCashiers() > 0) {
 			// If there are free cashiers. Pay.
 			new PayEvent(TimeState.paymentTime(), state, que, c);
 			state.decreaseFreeCashiers(); // One less free cashier.
 		} else {
 			state.addCustomer(c); // Adding customer to que as no cashiers are available.
-			c.setStartQueue(state.getCurrTime());
+//			c.setStartQueue(state.getCurrTime());
 
 		}
 	}
