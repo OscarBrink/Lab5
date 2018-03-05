@@ -32,6 +32,7 @@ public class ArriveEvent extends Event {
 		state.setCurrTime(time);
 		state.increaseTotCustomers();
 		state.increaseIdleTime();
+		state.increaseQueTime();
 		if (state.Open()) {
 			if (state.canEnter()) {
 				state.increaseCurrCustomers();

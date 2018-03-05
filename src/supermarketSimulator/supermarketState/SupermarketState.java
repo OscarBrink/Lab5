@@ -208,12 +208,19 @@ public class SupermarketState extends State {
 		return this.nrOfFreeCashiers;
 	}
 
+	/**
+	 * Increases the total time cashiers has been idle during the simulation.
+	 */
 	public void increaseIdleTime() {
 		if (nrOfFreeCashiers > 0) {
-			idleCashierTime += this.currentTime - this.previousTime;
+			idleCashierTime += (this.currentTime - this.previousTime);
 		}
 	}
 	
+	/**
+	 * Updates the currentTime and saves the last currentTime in a previousTime variable.
+	 * @param time the time when the method is called.
+	 */
 	public void setCurrTime(double time){
 		this.previousTime = this.currentTime;
 		this.currentTime = time;
@@ -229,8 +236,6 @@ public class SupermarketState extends State {
 	/**
 	 * Increases the total quetime for the store.
 	 * 
-	 * @param time
-	 *            The time a specific customer has been in que.
 	 */
 	public void increaseQueTime() {
 		if(getCashierQueSize() > 0){

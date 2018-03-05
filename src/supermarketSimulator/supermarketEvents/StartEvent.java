@@ -23,7 +23,6 @@ public class StartEvent extends Event {
 	public void effect() {
 		state.setCurrTime(time);
 		new ArriveEvent(state.getTimeState().arrivalTime(time), state, eventQueue);
-
 	}
 
 	@Override
