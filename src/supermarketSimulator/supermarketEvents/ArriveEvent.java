@@ -46,8 +46,18 @@ public class ArriveEvent extends Event {
 		}
 
 	}
-	
-	
+
+	@Override
+	public String[] getPrintInfo() {
+		return new String[]{
+				String.format("%.2f", time),
+				getEventName(),
+				String.valueOf(c.getCustomerNumber())
+		};
+	}
+
+
+
 	public int getCustomerNumber() {
 		return c.getCustomerNumber();
 	}

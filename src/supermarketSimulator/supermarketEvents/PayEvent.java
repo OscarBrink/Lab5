@@ -47,4 +47,13 @@ public class PayEvent extends Event {
 
 	}
 
+	@Override
+	public String[] getPrintInfo() {
+		return new String[]{
+				String.format("%.2f", time),
+				getEventName(),
+				String.valueOf(c.getCustomerNumber())
+		};
+	}
+
 }

@@ -29,15 +29,18 @@ public class SupermarketState extends State {
 
 	/**
 	 * Puts all the variables for each event into an array.
-	 * 
+	 *
 	 * @return info Array with all the variables.
 	 */
 	public String[] supermarketInfo() {
 		DecimalFormat df = new DecimalFormat("#0.00");
 		String[] info = new String[13];
-		info[0] = String.valueOf(df.format(queueList.getFirst().getTime())); // Händelsetidpunkt
-		info[1] = queueList.getFirst().getEventName(); // Händelsenamn
-		info[2] = String.valueOf(queueList.getFirst().getCustomerNumber()); // Kundnr
+
+		String[] eventInfo = queueList.getFirst().getPrintInfo();
+		info[0] = eventInfo[0]; // Händelsetidpunkt
+		info[1] = eventInfo[1]; // Händelsenamn
+		info[2] = eventInfo[2]; // Kundnr
+
 		info[3] = isOpen(); // Affären öppen eller stängd
 		info[4] = String.valueOf(nrOfFreeCashiers); // Lediga kassor
 		info[5] = String.valueOf(df.format(idleCashierTime)); // Tid som kassor varit lediga
@@ -53,7 +56,7 @@ public class SupermarketState extends State {
 
 	/**
 	 * Puts the start parameters for the simulator into an array.
-	 * 
+	 *
 	 * @return parameters Array of the simulators parameters.
 	 */
 	public double[] supermarketParameters() {
@@ -71,7 +74,7 @@ public class SupermarketState extends State {
 
 	/**
 	 * Puts the result of the simulation into an array.
-	 * 
+	 *
 	 * @return result Array of the result from the simulation.
 	 */
 	public double[] supermarketResult() {
@@ -101,7 +104,7 @@ public class SupermarketState extends State {
 	/**
 	 * Adds a customer to the cashierqueue and increases total of customers that has
 	 * had to queue.
-	 * 
+	 *
 	 * @param c
 	 *            The customer to be added.
 	 */
@@ -139,7 +142,7 @@ public class SupermarketState extends State {
 
 	/**
 	 * Checks if the store is full.
-	 * 
+	 *
 	 * @return Ö if store isn't full, otherwise returns S.
 	 */
 	private String isOpen() {

@@ -10,6 +10,7 @@ public abstract class Event {
 	public abstract String getEventName();
 
 	public abstract void effect();
-	
-	public abstract int getCustomerNumber();
+
+	public abstract String[] getPrintInfo();
+
 }

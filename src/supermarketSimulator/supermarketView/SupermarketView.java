@@ -6,7 +6,7 @@ import supermarketSimulator.supermarketState.SupermarketState;
 import genericSimulator.view.View;
 
 public class SupermarketView extends View {
-	
+
 	private SupermarketState state;
 	
 	public SupermarketView(SupermarketState state){
