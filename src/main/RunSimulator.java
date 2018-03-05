@@ -24,6 +24,8 @@ public class RunSimulator {
 		state.setPayMax(payMax);
 		state.setSeed(seed);
 
+		state.initTimeState();
+
 		eventQueue.addEvent(new StartEvent(0, state, eventQueue));
 		eventQueue.addEvent(new StopSimEvent(stopTime, state));
 
