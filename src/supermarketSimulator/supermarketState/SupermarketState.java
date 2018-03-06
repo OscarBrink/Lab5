@@ -343,8 +343,10 @@ public class SupermarketState extends State {
 
 	public void updateState() {
 		setCurrTime(queueList.getFirst().getTime());
-		increaseIdleTime();
-		increaseQueTime();
+		if (!(queueList.getFirst().getEventName() == "StopEvent")) {
+			increaseIdleTime();
+			increaseQueTime();
+		}
 		setChanged();
 		notifyObservers();
 	}
