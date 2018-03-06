@@ -34,7 +34,6 @@ public class SupermarketState extends State {
 	 * @return info Array with all the variables.
 	 */
 	public String[] supermarketInfo() {
-		increaseIdleTime();
 		DecimalFormat df = new DecimalFormat("#0.00");
 		String[] info = new String[13];
 
