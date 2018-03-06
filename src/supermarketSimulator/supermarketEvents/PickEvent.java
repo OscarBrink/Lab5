@@ -34,7 +34,7 @@ public class PickEvent extends Event {
 			state.decreaseFreeCashiers(); // One less free cashier.
 		} else {
 			state.addCustomer(c); // Adding customer to que as no cashiers are available.
-//			c.setStartQueue(state.getCurrTime());
+			c.setStartQueue(state.getCurrTime());
 
 		}
 	}

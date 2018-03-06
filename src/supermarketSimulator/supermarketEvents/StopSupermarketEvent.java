@@ -13,7 +13,7 @@ public class StopSupermarketEvent extends StopEvent {
 
 	@Override
 	public String getEventName() {
-		return "StopSupermarketEvent";
+		return "StopEvent";
 	}
 
 	@Override

@@ -5,7 +5,7 @@ package supermarketSimulator.supermarketState;
  */
 public class Customer {
 	private int number;
-	private double queueTime, startQueue;
+	private double queueTime = 0.00d, startQueue = 0.00d;
 
 	/**
 	 * Constructor.
@@ -36,7 +36,11 @@ public class Customer {
 	 * @pre startQueue must have been set.
 	 */
 	public void setQueueTime(double time) {
-		this.queueTime = time - this.startQueue;
+		if(this.startQueue != 0){ // If startQueue is set.
+			this.queueTime = time - this.startQueue;
+		}
+	
+		
 	}
 
 	/**

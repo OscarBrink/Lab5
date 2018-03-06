@@ -15,7 +15,7 @@ public class StartSupermarketEvent extends StartEvent {
 
 	@Override
 	public String getEventName() {
-		return "StartSupermarketEvent";
+		return "StartEvent";
 	}
 
 	@Override

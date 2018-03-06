@@ -215,7 +215,7 @@ public class SupermarketState extends State {
 	 */
 	public void increaseIdleTime() {
 		if (nrOfFreeCashiers > 0) {
-			idleCashierTime += (this.currentTime - this.previousTime);
+			idleCashierTime += (this.currentTime - this.previousTime) * this.getCashierQueSize();
 		}
 	}
 	
@@ -245,8 +245,9 @@ public class SupermarketState extends State {
 	 */
 	public void increaseQueTime() {
 		if(getCashierQueSize() > 0){
-			this.queueTime += this.currentTime - this.previousTime;
+			this.queueTime += (this.currentTime - this.previousTime) * getCashierQueSize();
 		}
+		
 	}
 
 	/**
