@@ -34,11 +34,11 @@ public class PayEvent extends Event {
 	 */
 	@Override
 	public void effect() {
-		state.setCurrTime(time);
-		state.increaseIdleTime();
+		//state.setCurrTime(time);
+		//state.increaseIdleTime();
 		state.decreaseCurrCustomers();
 		state.finishedCustomer();
-		state.increaseQueTime();
+		//state.increaseQueTime();
 		if (state.getCashierQueSize() > 0) {
 			new PayEvent(state.getTimeState().paymentTime(time), state, que, state.getNextCustomer()); // Next customer pays.
 		} else {

@@ -2,7 +2,7 @@ package genericSimulator.state;
 
 import java.util.Observable;
 
-public class State extends Observable { 
+public abstract class State extends Observable {
 	private boolean emergencyBreak = false;
 	int currentTime;
 
@@ -18,5 +18,7 @@ public class State extends Observable {
 	public synchronized void setChanged() {
 		super.setChanged();
 	}
+
+	public abstract void updateState();
 
 }

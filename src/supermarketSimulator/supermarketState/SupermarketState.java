@@ -34,6 +34,7 @@ public class SupermarketState extends State {
 	 * @return info Array with all the variables.
 	 */
 	public String[] supermarketInfo() {
+		increaseIdleTime();
 		DecimalFormat df = new DecimalFormat("#0.00");
 		String[] info = new String[13];
 
@@ -339,6 +340,14 @@ public class SupermarketState extends State {
 	 */
 	public int getTotalCustomers() {
 		return totalCustomers;
+	}
+
+	public void updateState() {
+		setCurrTime(queueList.getFirst().getTime());
+		increaseIdleTime();
+		increaseQueTime();
+		setChanged();
+		notifyObservers();
 	}
 
 

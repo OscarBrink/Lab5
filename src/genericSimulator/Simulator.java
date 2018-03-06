@@ -21,8 +21,11 @@ public class Simulator {
 
 	public void run() {
 		while (!state.getEmergencyBreak()) {
+			state.updateState();
+			/*
 			state.setChanged();
 			state.notifyObservers();
+			*/
 			eventQueue.getFirst().effect();
 			eventQueue.removeFirst();
 		}

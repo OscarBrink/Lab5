@@ -20,7 +20,7 @@ public class StartSupermarketEvent extends StartEvent {
 
 	@Override
 	public void effect() {
-		state.setCurrTime(time);
+		//state.setCurrTime(time);
 		new ArriveEvent(state.getTimeState().arrivalTime(time), state, eventQueue);
 	}
 
