@@ -3,14 +3,17 @@ package genericSimulator.events;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
+/**
+ * Implements a FIFO-queue of Event objects sorted by double Event.time
+ *
+ * @author Josefine Bexelius
+ * @author Oscar Brink
+ * @author Lisa Jonsson
+ * @author Marc Nilsson
+ */
 public class EventQueue {
 
 	private ArrayList<Event> queueList = new ArrayList<>();
-
-	public Event get(int index) {
-		return queueList.get(index);
-	}
-
 
 	/**
 	 * Adds a new item at the end of the queue.
@@ -25,7 +28,6 @@ public class EventQueue {
 	 * Uses binary search to find position to insert new event.
 	 */
 	private int findInsertionPosition(Event event) {
-		int loopVar = 0;
 		if (queueList.isEmpty()) {
 			return 0;
 		}
@@ -43,7 +45,6 @@ public class EventQueue {
 		while ((queueList.get(searchVal - 1).getTime() > eventTime
 				|| queueList.get(searchVal).getTime() < eventTime)) {
 			searchVal = (lowestChecked + highestChecked ) / 2;
-			loopVar++;
 
 			if (queueList.get(searchVal).getTime() < eventTime) {
 				lowestChecked = searchVal + 1;
@@ -83,7 +84,4 @@ public class EventQueue {
 		return queueList.size();
 	}
 
-	public ArrayList<Event> getQueueList() {
-		return queueList;
-	}
 }
