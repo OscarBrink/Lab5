@@ -287,25 +287,41 @@ public class SupermarketState extends State {
 		this.lambda = lambda;
 	}
 
+	/**
+	 * @param pickMin Setter for minimum pick-time.
+	 */
 	public void setPickMin(double pickMin) {
 		this.pickMin = pickMin;
 	}
 
+	/**
+	 * @param pickMax Setter for maximum pick-time.
+	 */
 	public void setPickMax(double pickMax) {
 		this.pickMax = pickMax;
 	}
 
+	/**
+	 * @param payMin Setter for minimum pay-time.
+	 */
 	public void setPayMin(double payMin) {
 		this.payMin = payMin;
 	}
 
+	/**
+	 * @param payMax Setter for maximum pay-time.
+	 */
 	public void setPayMax(double payMax) {
 		this.payMax = payMax;
 	}
 
+	/**
+	 * @param seed Setter for seed for random values.
+	 */
 	public void setSeed(long seed) {
 		this.seed = seed;
 	}
+
 
 	public void initTimeState() {
 		this.timeState = new TimeState(seed, lambda, pickMin, pickMax, payMin, payMax);

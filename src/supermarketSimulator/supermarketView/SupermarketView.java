@@ -25,7 +25,7 @@ public class SupermarketView extends View {
 	 */
 	public void printEvent(){
 		String[] info = state.supermarketInfo();
-		if(state.getQueueList().getFirst().getEventName() == "StartEvent"){
+		if(state.getQueueList().getFirst().getEventName() == "StartSupermarketEvent"){
 			printParameters();
 			System.out.println("FÖRLOPP\n==========\n");
 			System.out.printf("%-10s %-20s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s\n", "Tid", "Händelse", "Kund", "?", "Led","LedT", "I", "$", ":-(", "Köat", "KöT","Köar", "[Kassakö]");
@@ -34,7 +34,7 @@ public class SupermarketView extends View {
 		else if(state.getQueueList().getFirst().getEventName() == "CloseEvent"){
 			System.out.printf("%-10s %-20s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s\n", info[0], info[1], "---", info[3], info[4], info[5], info[6], info[7], info[8], info[9], info[10],info[11],info[12]);
 		}
-		else if(state.getQueueList().getFirst().getEventName() == "StopSimEvent"){
+		else if(state.getQueueList().getFirst().getEventName() == "StopSupermarketEvent"){
 			System.out.printf("%-10s %-10s\n", info[0], info[1]);
 			printResult();
 		}

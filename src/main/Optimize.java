@@ -5,8 +5,8 @@ import java.util.Random;
 import genericSimulator.*;
 import genericSimulator.events.EventQueue;
 import supermarketSimulator.supermarketEvents.CloseSupermarketEvent;
-import supermarketSimulator.supermarketEvents.StartEvent;
-import supermarketSimulator.supermarketEvents.StopSimEvent;
+import supermarketSimulator.supermarketEvents.StartSupermarketEvent;
+import supermarketSimulator.supermarketEvents.StopSupermarketEvent;
 import supermarketSimulator.supermarketState.SupermarketState;
 import supermarketSimulator.supermarketView.SupermarketView;
 
@@ -29,7 +29,7 @@ public class Optimize {
 	int openCashiersStart = 1;
 	int nextSeed;
 	int numberOfFailedRuns;
-	int numberOfCustomers = 99;
+	int numberOfCustomers;
 	
 	public Optimize(double stopTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax, double payMin, double payMax) {
 	
@@ -50,25 +50,23 @@ public class Optimize {
 		state.setSeed(seed);
 		state.initTimeState();
 		state.setOpenCashiers(openCashiers);
-		eventQueue.addEvent(new StartEvent(0, state, eventQueue));
+		eventQueue.addEvent(new StartSupermarketEvent(0, state, eventQueue));
 		eventQueue.addEvent(new CloseSupermarketEvent(10.0, state, eventQueue));
-		eventQueue.addEvent(new StopSimEvent(stopTime, state));
+		eventQueue.addEvent(new StopSupermarketEvent(stopTime, state));
 		
 
 		view = new SupermarketView(state);
 
 		simulator = new Simulator(eventQueue, state, view);	
 		simulator.runWithNoPrint();
-		numberOfCustomers = state.getTotalCustomers();
 		return state.getNumberOfMissedCustomers();
 	}
 	
 	int optimizeCashiers(double stopTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax, double payMin, double payMax, long seed) {
+		numberOfCustomers = maxAmountCustomers;
 		openCashiers = 0;
 		maxMin = numberOfCustomers;
 		while(maxMin > 0) {
-			System.out.println("Kunder: "+numberOfCustomers);
-			System.out.println("Kassor: "+openCashiers);
 				if(openCashiers > numberOfCustomers) {
 					numberOfFailedRuns++;
 					return 0;
@@ -79,12 +77,14 @@ public class Optimize {
 						tempMaxMin = currentNumberOfMissedCustomers;		
 					} 
 					maxMin = tempMaxMin;
+					System.out.println("Kunder: "+numberOfCustomers);
+					System.out.println("Kassor: "+openCashiers);
 					System.out.println("Maximalt antal missade kunder: "+maxMin);
 					if (maxMin == maxMissedThreshold) {
 						return openCashiers;
 					}
 				openCashiers++;		
-			} 
+			}
 		System.out.println("openCashiers: "+openCashiers);
 		return openCashiers;
 	}

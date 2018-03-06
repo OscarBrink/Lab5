@@ -3,20 +3,19 @@ package supermarketSimulator.supermarketEvents;
 import genericSimulator.events.*;
 import supermarketSimulator.supermarketState.*;
 
-public class StartEvent extends Event {
+public class StartSupermarketEvent extends StartEvent {
 	private SupermarketState state;
 	private EventQueue eventQueue;
 
-	public StartEvent(int time, SupermarketState state, EventQueue eventQueue) {
-		super.time = time;
+	public StartSupermarketEvent(int time, SupermarketState state, EventQueue eventQueue) {
+		super(time);
 		this.state = state;
 		this.eventQueue = eventQueue;
-
 	}
 
 	@Override
 	public String getEventName() {
-		return "StartEvent";
+		return "StartSupermarketEvent";
 	}
 
 	@Override

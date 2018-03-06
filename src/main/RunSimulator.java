@@ -3,8 +3,8 @@ package main;
 import genericSimulator.*;
 import genericSimulator.events.EventQueue;
 import supermarketSimulator.supermarketEvents.CloseSupermarketEvent;
-import supermarketSimulator.supermarketEvents.StartEvent;
-import supermarketSimulator.supermarketEvents.StopSimEvent;
+import supermarketSimulator.supermarketEvents.StartSupermarketEvent;
+import supermarketSimulator.supermarketEvents.StopSupermarketEvent;
 import supermarketSimulator.supermarketState.SupermarketState;
 import supermarketSimulator.supermarketView.SupermarketView;
 
@@ -27,9 +27,9 @@ public class RunSimulator {
 
 		state.initTimeState();
 
-		eventQueue.addEvent(new StartEvent(0, state, eventQueue));
+		eventQueue.addEvent(new StartSupermarketEvent(0, state, eventQueue));
 		eventQueue.addEvent(new CloseSupermarketEvent(10.0, state, eventQueue));
-		eventQueue.addEvent(new StopSimEvent(stopTime, state));
+		eventQueue.addEvent(new StopSupermarketEvent(stopTime, state));
 
 		SupermarketView view = new SupermarketView(state);
 
