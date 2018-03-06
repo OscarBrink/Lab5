@@ -4,11 +4,11 @@ import genericSimulator.events.StopEvent;
 import supermarketSimulator.supermarketState.SupermarketState;
 
 public class StopSupermarketEvent extends StopEvent {
-	private SupermarketState state;
+	//private SupermarketState state;
 
 	public StopSupermarketEvent(double time, SupermarketState state) {
 		super.time = time;
-		this.state = state;
+		super.state = state;
 	}
 
 	@Override

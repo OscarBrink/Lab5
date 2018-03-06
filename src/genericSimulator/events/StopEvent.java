@@ -4,7 +4,7 @@ import genericSimulator.state.State;
 
 public class StopEvent extends Event {
 
-	private State state;
+	protected State state;
 
 	@Override
 	public String getEventName() {
