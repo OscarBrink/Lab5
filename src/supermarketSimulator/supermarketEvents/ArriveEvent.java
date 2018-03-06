@@ -30,10 +30,10 @@ public class ArriveEvent extends Event {
 	@Override
 	public void effect() {
 		//state.setCurrTime(time);
-		state.increaseTotCustomers();
 		//state.increaseIdleTime();
 		//state.increaseQueTime();
 		if (state.Open()) {
+			state.increaseTotCustomers();
 			new ArriveEvent(state.getTimeState().arrivalTime(time), state, que); // Creates the next arrival.
 			if (state.canEnter()) {
 				//new ArriveEvent(state.getTimeState().arrivalTime(time), state, que); // Creates the next arrival.
