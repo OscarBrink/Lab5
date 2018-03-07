@@ -13,6 +13,7 @@ public class PayEvent extends Event {
 		this.que = que;
 		super.time = time;
 		this.state = state;
+		state.setPaymentTime(time);
 		//c.setQueueTime(state.getCurrTime());// Customer can pay, quetime is set.
 		//state.increaseQueTime(); // This customers quetime is added to total.
 		que.addEvent(this); // Adds itself to the EventQueue

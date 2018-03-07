@@ -9,7 +9,7 @@ import genericSimulator.state.State;
 public class SupermarketState extends State {
 
 	private int finishedCustomers, currentCustomers, customersMissed, maxCustomers, totalCustomers;
-	private double queueTime = 0.0, idleCashierTime, previousTime;
+	private double queueTime = 0.0, idleCashierTime, previousTime, paymentTime;
 	private int openCashiers, queTot = 0;
 	private int nrOfFreeCashiers;
 	private double currentTime, lambda, pickMin, pickMax, payMin, payMax;
@@ -85,7 +85,7 @@ public class SupermarketState extends State {
 		result[2] = customersMissed; // Kunder som inte kom in
 		result[3] = openCashiers; // Antal tillgängliga kassor
 		result[4] = idleCashierTime; // Summan av tid kassor varit lediga
-		result[5] = previousTime; // Tidpunkt sista kund betalat.
+		result[5] = paymentTime; // Tidpunkt sista kund betalat.
 		result[6] = queTot; // Max antal kunder som köat
 		result[7] = (this.queueTime); // Summan av tid kunder köat.
 		return result;
@@ -233,6 +233,10 @@ public class SupermarketState extends State {
 	 */
 	public double getCurrTime() {
 		return this.currentTime;
+	}
+	
+	public void setPaymentTime(double time){
+		this.paymentTime = time;
 	}
 	
 	public int getMaxOpenCashiers() {
