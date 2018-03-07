@@ -49,8 +49,8 @@ public class Optimize {
 	 */
 	public Optimize(double stopTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax, double payMin, double payMax, long seed) {
 	
-		System.out.println(findMinNumberOfOpenCashiersNeeded(stopTime, maxAmountCustomers, lambda, PickMin, PickMax, payMin, payMax, seed));
-		//System.out.println("Anal kassor som krävs: "+findMinNumberOfOpenCashiersNeededWithRandomSeeds(stopTime, maxAmountCustomers, lambda, PickMin, PickMax, payMin, payMax));
+		//System.out.println(findMinNumberOfOpenCashiersNeeded(stopTime, maxAmountCustomers, lambda, PickMin, PickMax, payMin, payMax, seed));
+		System.out.println("Anal kassor som krävs: "+findMinNumberOfOpenCashiersNeededWithRandomSeeds(stopTime, maxAmountCustomers, lambda, PickMin, PickMax, payMin, payMax));
 	}
 
 	//Runs the simulation once with the given parameters, returns number of missed customers.
@@ -75,13 +75,11 @@ public class Optimize {
 		simulator = new Simulator(eventQueue, state, view);	
 		simulator.runWithNoPrint();
 		numberOfCustomers = state.getTotalCustomers();
-		System.out.println("Antal kunder: "+numberOfCustomers);
 		return state.getNumberOfMissedCustomers();
 	}
 	
 	//Runs "runSimOnce" with an increasing amount of open cashiers to find and return how many cashiers have to be open to not miss any customers. 
 	int findMinNumberOfOpenCashiersNeeded(double stopTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax, double payMin, double payMax, long seed) {
-		System.out.println(seed);
 		openCashiers = openCashiersAtStart;
 		minNumberOfMissedCustomers = numberOfCustomers;
 		currentNumberOfMissedCustomers = numberOfCustomers;
@@ -93,12 +91,9 @@ public class Optimize {
 					currentNumberOfMissedCustomers = runSimOnce(stopTime, maxAmountCustomers, lambda, PickMin, PickMax, payMin, payMax, seed, openCashiers);
 				if(currentNumberOfMissedCustomers < minNumberOfMissedCustomers) {
 					minNumberOfMissedCustomers = currentNumberOfMissedCustomers;
-					System.out.println("Öppna kassor: "+openCashiers);
-					System.out.println("Minsta antalet missade kunder: "+minNumberOfMissedCustomers);
 				} 
 				
 				if(minNumberOfMissedCustomers == maxNrOfMissedCustomersAllowed) {
-					System.out.println("här");
 					return openCashiers;
 				}
 				openCashiers++;				
@@ -112,6 +107,7 @@ public class Optimize {
 		int minOpenCashiers = 0;
 		int runsWithoutIncrease = 0;		
 		tempMaxNrOfMinCashiers = 0;
+
 		while(runsWithoutIncrease < configurationRuns) {
 			nextSeed = randomSource.nextInt();
 			minOpenCashiers = findMinNumberOfOpenCashiersNeeded(stopTime, maxAmountCustomers, lambda, PickMin, PickMax, payMin, payMax, nextSeed);
@@ -121,11 +117,12 @@ public class Optimize {
 			} else {
 				runsWithoutIncrease++;
 			} 
-		} System.out.println("Antal failed: "+numberOfFailedRuns);
-		return tempMaxNrOfMinCashiers;	
+		}return tempMaxNrOfMinCashiers;	
 	} 
 
-}
+	}
+
+
 	
 
 	
