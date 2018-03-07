@@ -2,7 +2,7 @@ package supermarketSimulator.supermarketState;
 
 public class CustomerFactory {
 
-	private int amount = 0;
+	private int amount = -1;
 
 	public CustomerFactory() {
 
