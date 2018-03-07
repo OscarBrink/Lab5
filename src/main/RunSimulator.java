@@ -12,7 +12,7 @@ public class RunSimulator {
 	
 	SupermarketState state;
 
-	public RunSimulator(double stopTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax, double payMin, double payMax, long seed, int openCashiers) {
+	public RunSimulator(double stopTime, double closeTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax, double payMin, double payMax, long seed, int openCashiers) {
 
 		EventQueue eventQueue = new EventQueue();
 		state = new SupermarketState(eventQueue);
@@ -28,7 +28,7 @@ public class RunSimulator {
 		state.initTimeState();
 
 		eventQueue.addEvent(new StartSupermarketEvent(0, state, eventQueue));
-		eventQueue.addEvent(new CloseSupermarketEvent(10.0, state, eventQueue));
+		eventQueue.addEvent(new CloseSupermarketEvent(closeTime, state, eventQueue));
 		eventQueue.addEvent(new StopSupermarketEvent(stopTime, state));
 
 		SupermarketView view = new SupermarketView(state);

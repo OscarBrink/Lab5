@@ -58,10 +58,10 @@ public class Optimize {
 	 * @param payMax
 	 *            Maximum time spent at the register.
 	 */
-	public Optimize(double stopTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax,
+	public Optimize(double stopTime, double closeTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax,
 			double payMin, double payMax, long seed) {
 
-		System.out.println(findMinNumberOfOpenCashiersNeeded(stopTime, maxAmountCustomers, lambda, PickMin, PickMax,
+		System.out.println(findMinNumberOfOpenCashiersNeeded(stopTime, closeTime, maxAmountCustomers, lambda, PickMin, PickMax,
 				payMin, payMax, seed));
 		// System.out.println("Anal kassor som krävs:
 		// "+findMinNumberOfOpenCashiersNeededWithRandomSeeds(stopTime,
@@ -70,7 +70,7 @@ public class Optimize {
 
 	// Runs the simulation once with the given parameters, returns number of missed
 	// customers.
-	int runSimOnce(double stopTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax,
+	int runSimOnce(double stopTime, double closeTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax,
 			double payMin, double payMax, long seed, int openCashiers) {
 		eventQueue = new EventQueue();
 		state = new SupermarketState(eventQueue);
@@ -84,7 +84,7 @@ public class Optimize {
 		state.initTimeState();
 		state.setOpenCashiers(openCashiers);
 		eventQueue.addEvent(new StartSupermarketEvent(0, state, eventQueue));
-		eventQueue.addEvent(new CloseSupermarketEvent(20.0, state, eventQueue));
+		eventQueue.addEvent(new CloseSupermarketEvent(closeTime, state, eventQueue));
 		eventQueue.addEvent(new StopSupermarketEvent(stopTime, state));
 
 		view = new SupermarketView(state);
@@ -98,7 +98,7 @@ public class Optimize {
 
 	// Runs "runSimOnce" with an increasing amount of open cashiers to find and
 	// return how many cashiers have to be open to not miss any customers.
-	int findMinNumberOfOpenCashiersNeeded(double stopTime, int maxAmountCustomers, double lambda, double PickMin,
+	int findMinNumberOfOpenCashiersNeeded(double stopTime, double closeTime, int maxAmountCustomers, double lambda, double PickMin,
 			double PickMax, double payMin, double payMax, long seed) {
 		System.out.println(seed);
 		openCashiers = openCashiersAtStart;
@@ -109,7 +109,7 @@ public class Optimize {
 				numberOfFailedRuns++;
 				return 0;
 			}
-			currentNumberOfMissedCustomers = runSimOnce(stopTime, maxAmountCustomers, lambda, PickMin, PickMax, payMin,
+			currentNumberOfMissedCustomers = runSimOnce(stopTime, closeTime, maxAmountCustomers, lambda, PickMin, PickMax, payMin,
 					payMax, seed, openCashiers);
 			if (currentNumberOfMissedCustomers < minNumberOfMissedCustomers) {
 				minNumberOfMissedCustomers = currentNumberOfMissedCustomers;
@@ -128,7 +128,7 @@ public class Optimize {
 
 	// Runs "findMinNumberOfOpenCashiersNeeded" with different seeds to find a more
 	// probable number of minimum cashiers needed.
-	int findMinNumberOfOpenCashiersNeededWithRandomSeeds(double stopTime, int maxAmountCustomers, double lambda,
+	int findMinNumberOfOpenCashiersNeededWithRandomSeeds(double stopTime, double closeTime, int maxAmountCustomers, double lambda,
 			double PickMin, double PickMax, double payMin, double payMax) {
 		randomSource = new Random();
 		int minOpenCashiers = 0;
@@ -136,7 +136,7 @@ public class Optimize {
 		tempMaxNrOfMinCashiers = 0;
 		while (runsWithoutIncrease < configurationRuns) {
 			nextSeed = randomSource.nextInt();
-			minOpenCashiers = findMinNumberOfOpenCashiersNeeded(stopTime, maxAmountCustomers, lambda, PickMin, PickMax,
+			minOpenCashiers = findMinNumberOfOpenCashiersNeeded(stopTime, closeTime, maxAmountCustomers, lambda, PickMin, PickMax,
 					payMin, payMax, nextSeed);
 			if (minOpenCashiers > tempMaxNrOfMinCashiers) {
 				tempMaxNrOfMinCashiers = minOpenCashiers;
