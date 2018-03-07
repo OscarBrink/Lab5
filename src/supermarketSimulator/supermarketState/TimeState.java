@@ -9,7 +9,7 @@ public class TimeState {
 	public TimeState(long seed, double lambda, double pickLower, double pickUpper, double payLower, double payUpper) {
 		arrivalTimeGenerator = new ExponentialRandomStream(lambda, seed);
 		pickTimeGenerator = new UniformRandomStream(pickLower, pickUpper, seed);
-		payTimeGenerator = new UniformRandomStream(payLower, payUpper);
+		payTimeGenerator = new UniformRandomStream(payLower, payUpper,seed);
 	}
 
 	public double arrivalTime(double currentTime) {
