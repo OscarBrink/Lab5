@@ -28,7 +28,7 @@ public class RunSimulator {
 		state.initTimeState();
 
 		eventQueue.addEvent(new StartSupermarketEvent(0, state, eventQueue));
-		eventQueue.addEvent(new CloseSupermarketEvent(10.0, state, eventQueue));
+		eventQueue.addEvent(new CloseSupermarketEvent(8.0, state, eventQueue));
 		eventQueue.addEvent(new StopSupermarketEvent(stopTime, state));
 
 		SupermarketView view = new SupermarketView(state);
