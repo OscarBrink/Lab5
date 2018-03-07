@@ -85,7 +85,7 @@ public class SupermarketState extends State {
 		result[2] = customersMissed; // Kunder som inte kom in
 		result[3] = openCashiers; // Antal tillgängliga kassor
 		result[4] = idleCashierTime; // Summan av tid kassor varit lediga
-		result[5] = queueList.getFirst().getTime(); // Summan av tiden affären varit öppen.
+		result[5] = previousTime; // Tidpunkt sista kund betalat.
 		result[6] = queTot; // Max antal kunder som köat
 		result[7] = (this.queueTime); // Summan av tid kunder köat.
 		return result;

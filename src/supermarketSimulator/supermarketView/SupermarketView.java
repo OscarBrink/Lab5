@@ -59,7 +59,7 @@ public class SupermarketView extends View {
 		double[] res = state.supermarketResult();
 		System.out.println("\nRESULTAT\n==========\n");
 		System.out.println("1) Av " + (int)res[0] + " kunder handlade " + (int)res[1] + " medan " + (int)res[2] + " missades.\n");
-		System.out.println("2) Total tid " + (int)res[3] + " kassor varit lediga: " + df.format(res[4]) + " te.\n   Genomsnittlig ledig kassatid: " + df.format(res[4]/res[3]) + " te.\n");
+		System.out.println("2) Total tid " + (int)res[3] + " kassor varit lediga: " + df.format(res[4]) + " te.\n   Genomsnittlig ledig kassatid: " + df.format(res[4]/res[3]) + " te. (dvs. " + df.format(((res[4]/res[3])/res[5])*100) + "% av tiden från öppning tills sista kunden betalat).\n");
 		System.out.println("3) Total tid " + (int)res[6] + " kunder tvingats köa: " + df.format(res[7]) + " te.\n   Genomsnittlig kötid: " + df.format(res[7]/res[6]) + " te.\n");
 	}
 }
