@@ -25,6 +25,7 @@ public class Optimize {
 	SupermarketView view;
 	Simulator simulator;
 	Random randomSource;
+	long seed;
 	int configurationRuns = 100;
 	int minNumberOfMissedCustomers;
 	int tempMaxNrOfMinCashiers;
@@ -46,9 +47,10 @@ public class Optimize {
 	 * @param payMin Minimum time spent at the register.
 	 * @param payMax Maximum time spent at the register.
 	 */
-	public Optimize(double stopTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax, double payMin, double payMax) {
+	public Optimize(double stopTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax, double payMin, double payMax, long seed) {
 	
-		System.out.println("Anal kassor som krävs: "+findMinNumberOfOpenCashiersNeededWithRandomSeeds(stopTime, maxAmountCustomers, lambda, PickMin, PickMax, payMin, payMax));
+		System.out.println(findMinNumberOfOpenCashiersNeeded(stopTime, maxAmountCustomers, lambda, PickMin, PickMax, payMin, payMax, seed));
+		//System.out.println("Anal kassor som krävs: "+findMinNumberOfOpenCashiersNeededWithRandomSeeds(stopTime, maxAmountCustomers, lambda, PickMin, PickMax, payMin, payMax));
 	}
 
 	//Runs the simulation once with the given parameters, returns number of missed customers.
@@ -65,7 +67,7 @@ public class Optimize {
 		state.initTimeState();
 		state.setOpenCashiers(openCashiers);
 		eventQueue.addEvent(new StartSupermarketEvent(0, state, eventQueue));
-		eventQueue.addEvent(new CloseSupermarketEvent(10.0, state, eventQueue));
+		eventQueue.addEvent(new CloseSupermarketEvent(20.0, state, eventQueue));
 		eventQueue.addEvent(new StopSupermarketEvent(stopTime, state));
 		
 		view = new SupermarketView(state);
@@ -73,24 +75,33 @@ public class Optimize {
 		simulator = new Simulator(eventQueue, state, view);	
 		simulator.runWithNoPrint();
 		numberOfCustomers = state.getTotalCustomers();
+		System.out.println("Antal kunder: "+numberOfCustomers);
 		return state.getNumberOfMissedCustomers();
 	}
 	
 	//Runs "runSimOnce" with an increasing amount of open cashiers to find and return how many cashiers have to be open to not miss any customers. 
 	int findMinNumberOfOpenCashiersNeeded(double stopTime, int maxAmountCustomers, double lambda, double PickMin, double PickMax, double payMin, double payMax, long seed) {
+		System.out.println(seed);
 		openCashiers = openCashiersAtStart;
 		minNumberOfMissedCustomers = numberOfCustomers;
 		currentNumberOfMissedCustomers = numberOfCustomers;
-		while(currentNumberOfMissedCustomers > maxNrOfMissedCustomersAllowed) {
+		while(minNumberOfMissedCustomers > maxNrOfMissedCustomersAllowed) {
 				if(openCashiers > numberOfCustomers) {
 					numberOfFailedRuns++;
 					return 0;
-				}
+				} 
 					currentNumberOfMissedCustomers = runSimOnce(stopTime, maxAmountCustomers, lambda, PickMin, PickMax, payMin, payMax, seed, openCashiers);
 				if(currentNumberOfMissedCustomers < minNumberOfMissedCustomers) {
-					minNumberOfMissedCustomers = currentNumberOfMissedCustomers;		
+					minNumberOfMissedCustomers = currentNumberOfMissedCustomers;
+					System.out.println("Öppna kassor: "+openCashiers);
+					System.out.println("Minsta antalet missade kunder: "+minNumberOfMissedCustomers);
 				} 
-				openCashiers++;		
+				
+				if(minNumberOfMissedCustomers == maxNrOfMissedCustomersAllowed) {
+					System.out.println("här");
+					return openCashiers;
+				}
+				openCashiers++;				
 			}
 		return openCashiers;
 	}
