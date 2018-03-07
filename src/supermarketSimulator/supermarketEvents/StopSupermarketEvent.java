@@ -19,11 +19,6 @@ public class StopSupermarketEvent extends StopEvent {
 	}
 
 	@Override
-	public String getEventName() {
-		return "StopEvent";
-	}
-
-	@Override
 	public String[] getPrintInfo() {
 		return new String[] { String.valueOf(time), getEventName(), "" };
 	}

@@ -22,11 +22,6 @@ public class StartSupermarketEvent extends StartEvent {
 		this.eventQueue = eventQueue;
 	}
 
-	@Override
-	public String getEventName() {
-		return "StartEvent";
-	}
-
 	/**
 	 * The simulation has started, an arrive event is created.
 	 */
