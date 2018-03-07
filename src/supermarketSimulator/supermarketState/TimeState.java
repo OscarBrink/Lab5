@@ -1,5 +1,13 @@
 package supermarketSimulator.supermarketState;
 
+/**
+ * Class contains methods to generate eventtimes.
+ * 
+ * @author Josefine Bexelius
+ * @author Oscar Brink
+ * @author Lisa Jonsson
+ * @author Marc Nilsson
+ */
 public class TimeState {
 
 	private ExponentialRandomStream arrivalTimeGenerator;
@@ -9,7 +17,7 @@ public class TimeState {
 	public TimeState(long seed, double lambda, double pickLower, double pickUpper, double payLower, double payUpper) {
 		arrivalTimeGenerator = new ExponentialRandomStream(lambda, seed);
 		pickTimeGenerator = new UniformRandomStream(pickLower, pickUpper, seed);
-		payTimeGenerator = new UniformRandomStream(payLower, payUpper,seed);
+		payTimeGenerator = new UniformRandomStream(payLower, payUpper, seed);
 	}
 
 	public double arrivalTime(double currentTime) {

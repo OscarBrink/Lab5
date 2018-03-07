@@ -2,6 +2,11 @@ package supermarketSimulator.supermarketState;
 
 /**
  * Class describes a customer visiting the supermarket in the simulation.
+ *
+ * @author Josefine Bexelius
+ * @author Oscar Brink
+ * @author Lisa Jonsson
+ * @author Marc Nilsson
  */
 public class Customer {
 	private int number;
@@ -36,11 +41,10 @@ public class Customer {
 	 * @pre startQueue must have been set.
 	 */
 	public void setQueueTime(double time) {
-		if(this.startQueue != 0){ // If startQueue is set.
+		if (this.startQueue != 0) { // If startQueue is set.
 			this.queueTime = time - this.startQueue;
 		}
-	
-		
+
 	}
 
 	/**
