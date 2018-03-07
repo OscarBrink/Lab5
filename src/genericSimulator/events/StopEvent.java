@@ -2,7 +2,15 @@ package genericSimulator.events;
 
 import genericSimulator.state.State;
 
-public class StopEvent extends Event {
+/**
+ * Class implements a generic Event to stop the simulation.
+ *
+ * @author Josefine Bexelius
+ * @author Oscar Brink
+ * @author Lisa Jonsson
+ * @author Marc Nilsson
+ */
+public abstract class StopEvent extends Event {
 
 	protected State state;
 
@@ -14,11 +22,6 @@ public class StopEvent extends Event {
 	@Override
 	public void effect() {
 		state.stopSim();
-	}
-
-	@Override
-	public String[] getPrintInfo() {
-		return new String[0];
 	}
 
 }
