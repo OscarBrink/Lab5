@@ -25,9 +25,9 @@ public class CloseSupermarketEvent extends Event {
 	 */
 	@Override
 	public void effect() {
-		//state.setCurrTime(time);
-		//state.increaseIdleTime();
-		//state.increaseQueTime();
+		state.setCurrTime(time);
+		state.increaseIdleTime();
+//		state.increaseQueTime();
 		state.closeStore();
 
 	}
