@@ -6,9 +6,21 @@ import java.util.ArrayList;
 import genericSimulator.events.EventQueue;
 import genericSimulator.state.State;
 
+/**
+ * 
+ * @author Josefine Bexelius
+ * @author Oscar Brink
+ * @author Lisa Jonsson
+ * @author Marc Nilsson
+ * 
+ *         This class represents the state of the supermarket, meaning it keeps
+ *         track of all the variables that updates during the simulation and
+ *         also creates customers (and cashierqueues if needed).
+ */
 public class SupermarketState extends State {
 
-	private int finishedCustomers, currentCustomers, customersMissed, maxCustomers, totalCustomers;
+	private int finishedCustomers, currentCustomers, customersMissed,
+	maxCustomers, totalCustomers;
 	private double queueTime = 0.0, idleCashierTime, previousTime, paymentTime;
 	private int openCashiers, queTot = 0;
 	private int nrOfFreeCashiers;
@@ -20,12 +32,15 @@ public class SupermarketState extends State {
 	private ArrayList<Customer> cashierQueue = new ArrayList<Customer>();
 	private TimeState timeState;
 
+	/**
+	 * Constructor for SupermarketState, takes an EventQueue object to be able
+	 * to accesses the simulations events.
+	 * 
+	 * @param queueList
+	 *            the current simulations EventQueue object.
+	 */
 	public SupermarketState(EventQueue queueList) {
 		this.queueList = queueList;
-	}
-
-	public EventQueue getQueueList() {
-		return queueList;
 	}
 
 	/**
@@ -92,26 +107,24 @@ public class SupermarketState extends State {
 	}
 
 	/**
+	 * Updates the queuetime and the idleCahsierTime before the event gets
+	 * printed.
+	 */
+	public void updateState() {
+		setCurrTime(queueList.getFirst().getTime());
+		if (isOpen || queueList.getFirst().getEventName() == "PayEvent") {
+			increaseIdleTime();
+			increaseQueTime();
+		}
+		setChanged();
+		notifyObservers();
+	}
+
+	/**
 	 * Creates a customer and returns it.
 	 */
 	public Customer newCustomer() {
 		return customerFactory.newCustomer();
-	}
-
-	public int queueListSize() {
-		return queueList.size();
-	}
-
-	/**
-	 * Adds a customer to the cashierqueue and increases total of customers that has
-	 * had to queue.
-	 *
-	 * @param c
-	 *            The customer to be added.
-	 */
-	public void addCustomer(Customer c) {
-		this.cashierQueue.add(c);
-		queTot++;
 	}
 
 	/**
@@ -124,6 +137,39 @@ public class SupermarketState extends State {
 	}
 
 	/**
+	 * Adds a customer to the cashierqueue and increases total of customers that
+	 * has had to queue.
+	 *
+	 * @param c
+	 *            The customer to be added.
+	 */
+	public void addCustomer(Customer c) {
+		this.cashierQueue.add(c);
+		queTot++;
+	}
+
+	/**
+	 * Increases the total queuetime for the store.
+	 * 
+	 */
+	public void increaseQueTime() {
+		if (getCashierQueSize() > 0) {
+			this.queueTime += (this.currentTime - this.previousTime)
+					* getCashierQueSize();
+		}
+	}
+
+	/**
+	 * Increases the total time cashiers has been idle during the simulation.
+	 */
+	public void increaseIdleTime() {
+		if (nrOfFreeCashiers > 0) {
+			idleCashierTime += (this.currentTime - this.previousTime)
+					* this.getFreeCashiers();
+		}
+	}
+
+	/**
 	 * @return this.cashierQueue.size(); Size of the current cashierQue.
 	 */
 	public int getCashierQueSize() {
@@ -132,7 +178,7 @@ public class SupermarketState extends State {
 
 	/**
 	 * Returns a string containing the customernumbers off all customers in the
-	 * casherQueee.
+	 * casherQueue.
 	 */
 	public String toStringCashQue() {
 		String queString = "[";
@@ -142,30 +188,49 @@ public class SupermarketState extends State {
 	}
 
 	/**
-	 * Checks if the store is open or closed.
-	 *
-	 * @return Ö if store is open, otherwise returns S.
+	 * Returns the eventQueue that is used in the simulation.
+	 * 
+	 * @return queueList the eventQueue
 	 */
-	private String isOpen() {
-		return (isOpen) ? "Ö" : "S";
+	public EventQueue getQueueList() {
+		return queueList;
 	}
 
 	/**
-	 * returns true/false depending on if the max amount of customers are already in
-	 * the store. Will be called when a new arrival comes.
+	 * 
+	 * @return the size of the eventQueue
 	 */
-	public boolean canEnter() {
-		return currentCustomers < maxCustomers;
+	public int queueListSize() {
+		return queueList.size();
 	}
 
-
+	/**
+	 * Creates an TimeState object.
+	 */
+	public void initTimeState() {
+		this.timeState = new TimeState(seed, lambda, pickMin, pickMax, payMin,
+				payMax);
+	}
 
 	/**
-	 * Increases nr of customers missed. Called from arrive if the customer cannot
-	 * enter.
+	 * Increases amount of free cashiers.
 	 */
-	public void missedCustomer() {
-		this.customersMissed++;
+	public void increaseFreeCashiers() {
+		this.nrOfFreeCashiers++;
+	}
+
+	/**
+	 * Decreases nr of free cashiers.
+	 */
+	public void decreaseFreeCashiers() {
+		this.nrOfFreeCashiers--;
+	}
+
+	/**
+	 * Increases the total amount of customers that arrives at the store.
+	 */
+	public void increaseTotCustomers() {
+		totalCustomers++;
 	}
 
 	/**
@@ -180,6 +245,31 @@ public class SupermarketState extends State {
 	 */
 	public void decreaseCurrCustomers() {
 		this.currentCustomers--;
+	}
+
+	/**
+	 * Checks if the store is open or closed.
+	 *
+	 * @return Ö if store is open, otherwise returns S.
+	 */
+	private String isOpen() {
+		return (isOpen) ? "Ö" : "S";
+	}
+
+	/**
+	 * returns true/false depending on if the max amount of customers are
+	 * already in the store. Will be called when a new arrival comes.
+	 */
+	public boolean canEnter() {
+		return currentCustomers < maxCustomers;
+	}
+
+	/**
+	 * Increases nr of customers missed. Called from arrive if the customer
+	 * cannot enter.
+	 */
+	public void missedCustomer() {
+		this.customersMissed++;
 	}
 
 	/**
@@ -204,6 +294,134 @@ public class SupermarketState extends State {
 	}
 
 	/**
+	 * Updates the currentTime and saves the last currentTime in a previousTime
+	 * variable.
+	 * 
+	 * @param time
+	 *            the time when the method is called.
+	 */
+	public void setCurrTime(double time) {
+		this.previousTime = this.currentTime;
+		this.currentTime = time;
+	}
+
+	/**
+	 * Saves the time of the latest payEvent.
+	 * 
+	 * @param time
+	 *            the time the payEvent happens.
+	 */
+	public void setPaymentTime(double time) {
+		this.paymentTime = time;
+	}
+
+	/**
+	 * Sets the max number of customers that can be in the store at once.
+	 * 
+	 * @param maxCustomers
+	 *            number of customers
+	 */
+	public void setMaxCustomers(int maxCustomers) {
+		this.maxCustomers = maxCustomers;
+	}
+
+	/**
+	 * Sets the start value of how many available cashiers the store has during
+	 * the simulation.
+	 * 
+	 * @param openCashiers
+	 *            Amount of cashiers.
+	 */
+	public void setOpenCashiers(int openCashiers) {
+		this.openCashiers = openCashiers;
+		this.nrOfFreeCashiers = openCashiers;
+	}
+
+	/**
+	 * Sets the speed at which the customers arrives to the store.
+	 * 
+	 * @param lambda
+	 *            Customers arrivalspeed.
+	 */
+	public void setLambda(double lambda) {
+		this.lambda = lambda;
+	}
+
+	/**
+	 * @param pickMin
+	 *            Setter for minimum pick-time.
+	 */
+	public void setPickMin(double pickMin) {
+		this.pickMin = pickMin;
+	}
+
+	/**
+	 * @param pickMax
+	 *            Setter for maximum pick-time.
+	 */
+	public void setPickMax(double pickMax) {
+		this.pickMax = pickMax;
+	}
+
+	/**
+	 * @param payMin
+	 *            Setter for minimum pay-time.
+	 */
+	public void setPayMin(double payMin) {
+		this.payMin = payMin;
+	}
+
+	/**
+	 * @param payMax
+	 *            Setter for maximum pay-time.
+	 */
+	public void setPayMax(double payMax) {
+		this.payMax = payMax;
+	}
+
+	/**
+	 * @param seed
+	 *            Setter for seed for random values.
+	 */
+	public void setSeed(long seed) {
+		this.seed = seed;
+	}
+
+	/**
+	 * Returns the total amount of customers visiting the store.
+	 * 
+	 * @return totalCustomers All the people arriving at the store.
+	 */
+	public int getTotalCustomers() {
+		return totalCustomers;
+	}
+
+	/**
+	 * Returns total of customers that has not been able to get into the store.
+	 * 
+	 * @return customersMissed customers that couldn't enter the store.
+	 */
+	public int getNumberOfMissedCustomers() {
+		return customersMissed;
+	}
+
+	/**
+	 * Returns the number of cashiers available during the simulation
+	 * 
+	 * @return openCashiers number of cashiers.
+	 */
+	public int getMaxOpenCashiers() {
+		return openCashiers;
+	}
+
+	/**
+	 * @return currentTime The current time of the simulation.
+	 */
+	public double getCurrTime() {
+		return this.currentTime;
+	}
+
+	/**
 	 * @return nrOfFreeCashiers The nr of cashiers currently free.
 	 */
 	public int getFreeCashiers() {
@@ -211,150 +429,11 @@ public class SupermarketState extends State {
 	}
 
 	/**
-	 * Increases the total time cashiers has been idle during the simulation.
-	 */
-	public void increaseIdleTime() {
-		if (nrOfFreeCashiers > 0) {
-			idleCashierTime += (this.currentTime - this.previousTime) * this.getFreeCashiers();
-		}
-	}
-	
-	/**
-	 * Updates the currentTime and saves the last currentTime in a previousTime variable.
-	 * @param time the time when the method is called.
-	 */
-	public void setCurrTime(double time){
-		this.previousTime = this.currentTime;
-		this.currentTime = time;
-	}
-
-	/**
-	 * @return currentTime The current time.
-	 */
-	public double getCurrTime() {
-		return this.currentTime;
-	}
-	
-	public void setPaymentTime(double time){
-		this.paymentTime = time;
-	}
-	
-	public int getMaxOpenCashiers() {
-		return openCashiers;
-	}
-
-	/**
-	 * Increases the total quetime for the store.
+	 * Returns the timeState that has been created with initTimeState method.
 	 * 
+	 * @return timeState A TimeState object.
 	 */
-	public void increaseQueTime() {
-		if(getCashierQueSize() > 0){
-			this.queueTime += (this.currentTime - this.previousTime) * getCashierQueSize();
-		}
-		
-	}
-
-	/**
-	 * Increases amount of free cashiers.
-	 */
-	public void increaseFreeCashiers() {
-		this.nrOfFreeCashiers++;
-	}
-
-	/**
-	 * Decreases nr of free cashiers.
-	 */
-	public void decreaseFreeCashiers() {
-		this.nrOfFreeCashiers--;
-	}
-
-	/**
-	 * Increases the total amount of customers that arrives at the store.
-	 */
-	public void increaseTotCustomers() {
-		totalCustomers++;
-	}
-	
-	public int getNumberOfMissedCustomers() {
-		return customersMissed;
-	}
-
-	public void setMaxCustomers(int maxCustomers) {
-		this.maxCustomers = maxCustomers;
-	}
-
-	public void setOpenCashiers(int openCashiers) {
-		this.openCashiers = openCashiers;
-		this.nrOfFreeCashiers = openCashiers;
-	}
-
-	public void setLambda(double lambda) {
-		this.lambda = lambda;
-	}
-
-	/**
-	 * @param pickMin Setter for minimum pick-time.
-	 */
-	public void setPickMin(double pickMin) {
-		this.pickMin = pickMin;
-	}
-
-	/**
-	 * @param pickMax Setter for maximum pick-time.
-	 */
-	public void setPickMax(double pickMax) {
-		this.pickMax = pickMax;
-	}
-
-	/**
-	 * @param payMin Setter for minimum pay-time.
-	 */
-	public void setPayMin(double payMin) {
-		this.payMin = payMin;
-	}
-
-	/**
-	 * @param payMax Setter for maximum pay-time.
-	 */
-	public void setPayMax(double payMax) {
-		this.payMax = payMax;
-	}
-
-	/**
-	 * @param seed Setter for seed for random values.
-	 */
-	public void setSeed(long seed) {
-		this.seed = seed;
-	}
-
-
-	public void initTimeState() {
-		this.timeState = new TimeState(seed, lambda, pickMin, pickMax, payMin, payMax);
-	}
-
 	public TimeState getTimeState() {
 		return timeState;
 	}
-
-	
-	/**
-	 * Returns the total amount of customers visiting the store.
-	 * @return
-	 */
-	public int getTotalCustomers() {
-		return totalCustomers;
-	}
-
-	public void updateState() {
-		setCurrTime(queueList.getFirst().getTime());
-		if (isOpen || queueList.getFirst().getEventName() == "PayEvent") {
-			increaseIdleTime();
-			increaseQueTime();
-		}
-		setChanged();
-		notifyObservers();
-	}
-
-
-
 }
