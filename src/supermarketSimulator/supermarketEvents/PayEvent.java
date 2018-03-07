@@ -3,6 +3,16 @@ package supermarketSimulator.supermarketEvents;
 import genericSimulator.events.*;
 import supermarketSimulator.supermarketState.*;
 
+/**
+ * This class is the pay event of a customer. Contains the effect() which is the
+ * action taken when this event occurs.
+ * 
+ * @author Josefine Bexelius
+ * @author Oscar Brink
+ * @author Lisa Jonsson
+ * @author Marc Nilsson
+ */
+
 public class PayEvent extends Event {
 	private SupermarketState state;
 	private Customer c;
@@ -14,8 +24,6 @@ public class PayEvent extends Event {
 		super.time = time;
 		this.state = state;
 		state.setPaymentTime(time);
-		//c.setQueueTime(state.getCurrTime());// Customer can pay, quetime is set.
-		//state.increaseQueTime(); // This customers quetime is added to total.
 		que.addEvent(this); // Adds itself to the EventQueue
 
 	}
@@ -25,6 +33,9 @@ public class PayEvent extends Event {
 		return "PayEvent";
 	}
 
+	/**
+	 * @return The customer number of the customer in this event.
+	 */
 	public int getCustomerNumber() {
 		return c.getCustomerNumber();
 	}
@@ -35,13 +46,11 @@ public class PayEvent extends Event {
 	 */
 	@Override
 	public void effect() {
-		//state.setCurrTime(time);
-		//state.increaseIdleTime();
 		state.decreaseCurrCustomers();
 		state.finishedCustomer();
-		//state.increaseQueTime();
 		if (state.getCashierQueSize() > 0) {
-			new PayEvent(state.getTimeState().paymentTime(time), state, que, state.getNextCustomer()); // Next customer pays.
+			new PayEvent(state.getTimeState().paymentTime(time), state, que, state.getNextCustomer()); // Next customer
+																										// pays.
 		} else {
 			state.increaseFreeCashiers(); // Noone in que, Free cashier.
 		}
@@ -50,11 +59,7 @@ public class PayEvent extends Event {
 
 	@Override
 	public String[] getPrintInfo() {
-		return new String[]{
-				String.format("%.2f", time),
-				getEventName(),
-				String.valueOf(c.getCustomerNumber())
-		};
+		return new String[] { String.format("%.2f", time), getEventName(), String.valueOf(c.getCustomerNumber()) };
 	}
 
 }
